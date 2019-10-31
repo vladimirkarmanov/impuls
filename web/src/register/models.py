@@ -8,9 +8,14 @@ class User(AbstractUser):
     patronymic = models.CharField(max_length=30, blank=False)
     email = models.EmailField(max_length=70, blank=False)
     experience = models.PositiveSmallIntegerField(default=0)
-    job_place = models.ForeignKey('JobPlace', on_delete=models.DO_NOTHING,
+    job_place = models.ForeignKey('JobPlace',
+                                  on_delete=models.DO_NOTHING,
                                   related_name='users',
                                   null=True)
+    job_position = models.ForeignKey('JobPosition',
+                                     on_delete=models.DO_NOTHING,
+                                     related_name='users',
+                                     null=True)
 
     def __str__(self):
         return f'Username: {self.username}, email: {self.email}'
@@ -34,6 +39,13 @@ class AdditionalUserInfo(models.Model):
 
 
 class JobPlace(models.Model):
+    name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return f'Наименование: {self.name}'
+
+
+class JobPosition(models.Model):
     name = models.CharField(max_length=150)
 
     def __str__(self):
