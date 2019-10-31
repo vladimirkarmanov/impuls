@@ -16,6 +16,23 @@ class User(AbstractUser):
         return f'Username: {self.username}, email: {self.email}'
 
 
+class AdditionalUserInfo(models.Model):
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE,
+                                primary_key=True,
+                                related_name='additional_info')
+    country = models.CharField(max_length=30, default='Россия')
+    region = models.CharField(max_length=50, blank=True)
+    city = models.CharField(max_length=30, blank=True)
+    address = models.CharField(max_length=120, blank=True)
+    phone = models.CharField(max_length=11, blank=True, null=True)
+    mail_index = models.PositiveIntegerField(blank=True, null=True)
+    about = models.TextField(max_length=500, blank=True)
+
+    def __str__(self):
+        return f'Город: {self.city}, телефон: {self.phone}'
+
+
 class JobPlace(models.Model):
     name = models.CharField(max_length=150)
 
