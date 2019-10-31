@@ -111,6 +111,9 @@ USE_L10N = True
 USE_TZ = True
 
 
+# User model
+AUTH_USER_MODEL = 'register.User'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
