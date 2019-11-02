@@ -40,14 +40,14 @@ class AdditionalUserInfo(models.Model):
 
 
 class JobPlace(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
 
     def __str__(self):
         return f'Наименование: {self.name}'
 
 
 class JobPosition(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
 
     def __str__(self):
         return f'Наименование: {self.name}'
