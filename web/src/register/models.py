@@ -16,6 +16,7 @@ class User(AbstractUser):
                                      on_delete=models.DO_NOTHING,
                                      related_name='users',
                                      null=True)
+    events = models.ManyToManyField('events.Event', related_name='users')
 
     def __str__(self):
         return f'Username: {self.username}, email: {self.email}'
