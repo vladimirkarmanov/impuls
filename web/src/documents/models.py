@@ -49,7 +49,7 @@ class Contract(models.Model):
 
     def __str__(self):
         return f'Номер: {self.number}, дата: {self.date},' \
-               f' статус: {self.status}'
+               f' статус: {"Активен" if self.status else "Неактивен"}'
 
     class Meta:
         verbose_name = 'Договор'
