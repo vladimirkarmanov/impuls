@@ -26,9 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'livereload',
     'django.contrib.staticfiles',
-    'register',
-    'events',
-    'documents'
+    'register.apps.RegisterConfig',
+    'events.apps.EventsConfig',
+    'documents.apps.DocumentsConfig'
 ]
 
 MIDDLEWARE = [
