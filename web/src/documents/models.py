@@ -15,6 +15,10 @@ class Document(models.Model):
     def __str__(self):
         return f'Номер: {self.number}'
 
+    class Meta:
+        verbose_name = 'Документ'
+        verbose_name_plural = 'Документы'
+
 
 class DocumentType(models.Model):
     name = models.CharField(max_length=150, unique=True,
@@ -25,6 +29,10 @@ class DocumentType(models.Model):
 
     def __str__(self):
         return f'Наименование: {self.name}'
+
+    class Meta:
+        verbose_name = 'Вид документа'
+        verbose_name_plural = 'Виды документов'
 
 
 class Contract(models.Model):
@@ -43,6 +51,10 @@ class Contract(models.Model):
         return f'Номер: {self.number}, дата: {self.date},' \
                f' статус: {self.status}'
 
+    class Meta:
+        verbose_name = 'Договор'
+        verbose_name_plural = 'Договоры'
+
 
 class DocumentRegulation(models.Model):
     document_type = models.CharField(max_length=150, unique=True,
@@ -50,3 +62,7 @@ class DocumentRegulation(models.Model):
 
     def __str__(self):
         return f'Вид документа: {self.document_type}'
+
+    class Meta:
+        verbose_name = 'Регламент документа'
+        verbose_name_plural = 'Регламенты документов'

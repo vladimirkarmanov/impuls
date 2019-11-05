@@ -11,6 +11,10 @@ class Event(models.Model):
     def __str__(self):
         return f'Наименование: {self.name}'
 
+    class Meta:
+        verbose_name = 'Мероприятие'
+        verbose_name_plural = 'Мероприятия'
+
 
 class EventOrganizer(models.Model):
     name = models.CharField(max_length=150, verbose_name='Наименование')
@@ -19,6 +23,10 @@ class EventOrganizer(models.Model):
 
     def __str__(self):
         return f'Наименование: {self.name}, телефон: {self.phone}'
+
+    class Meta:
+        verbose_name = 'Организатор'
+        verbose_name_plural = 'Организаторы'
 
 
 class EventDate(models.Model):
@@ -34,6 +42,10 @@ class EventDate(models.Model):
         return f'Дата начала: {self.start_date},' \
                f' дата окончания: {self.end_date}'
 
+    class Meta:
+        verbose_name = 'Дата мероприятия'
+        verbose_name_plural = 'Даты мероприятий'
+
 
 class PressRelease(models.Model):
     file = models.FileField(verbose_name='Файл')
@@ -44,3 +56,7 @@ class PressRelease(models.Model):
 
     def __str__(self):
         return f'Пресс релиз: {self.file.name}'
+
+    class Meta:
+        verbose_name = 'Пресс релиз'
+        verbose_name_plural = 'Пресс релизы'

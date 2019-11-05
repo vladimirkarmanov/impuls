@@ -26,6 +26,34 @@ class User(AbstractUser):
     def __str__(self):
         return f'Логин: {self.username}, email: {self.email}'
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+
+class JobPlace(models.Model):
+    name = models.CharField(max_length=150, unique=True,
+                            verbose_name='Наименование')
+
+    def __str__(self):
+        return f'Наименование: {self.name}'
+
+    class Meta:
+        verbose_name = 'Место работы'
+        verbose_name_plural = 'Места работы'
+
+
+class JobPosition(models.Model):
+    name = models.CharField(max_length=150, unique=True,
+                            verbose_name='Должность')
+
+    def __str__(self):
+        return f'Наименование: {self.name}'
+
+    class Meta:
+        verbose_name = 'Должность'
+        verbose_name_plural = 'Должности'
+
 
 class AdditionalUserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,
@@ -50,18 +78,6 @@ class AdditionalUserInfo(models.Model):
     def __str__(self):
         return f'Город: {self.city}, телефон: {self.phone}'
 
-
-class JobPlace(models.Model):
-    name = models.CharField(max_length=150, unique=True,
-                            verbose_name='Наименование')
-
-    def __str__(self):
-        return f'Наименование: {self.name}'
-
-
-class JobPosition(models.Model):
-    name = models.CharField(max_length=150, unique=True,
-                            verbose_name='Должность')
-
-    def __str__(self):
-        return f'Наименование: {self.name}'
+    class Meta:
+        verbose_name = 'Дополнительная информация о пользователе'
+        verbose_name_plural = 'Дополнительная информация о пользователе'
