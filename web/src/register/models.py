@@ -12,15 +12,23 @@ class User(AbstractUser):
     email = models.EmailField(max_length=70, blank=False,
                               verbose_name='Email')
     experience = models.PositiveSmallIntegerField(default=0,
+                                                  blank=True,
                                                   verbose_name='Стаж')
-    job_place = models.ForeignKey('JobPlace', on_delete=models.DO_NOTHING,
-                                  related_name='users', null=True,
+    job_place = models.ForeignKey('JobPlace',
+                                  on_delete=models.DO_NOTHING,
+                                  related_name='users',
+                                  blank=True,
+                                  null=True,
                                   verbose_name='Место работы')
     job_position = models.ForeignKey('JobPosition',
                                      on_delete=models.DO_NOTHING,
-                                     related_name='users', null=True,
+                                     related_name='users',
+                                     blank=True,
+                                     null=True,
                                      verbose_name='Должность')
-    events = models.ManyToManyField('events.Event', related_name='users',
+    events = models.ManyToManyField('events.Event',
+                                    related_name='users',
+                                    blank=True,
                                     verbose_name='Мероприятия')
 
     def __str__(self):
@@ -36,7 +44,7 @@ class JobPlace(models.Model):
                             verbose_name='Наименование')
 
     def __str__(self):
-        return f'Наименование: {self.name}'
+        return self.name
 
     class Meta:
         verbose_name = 'Место работы'
@@ -48,7 +56,7 @@ class JobPosition(models.Model):
                             verbose_name='Должность')
 
     def __str__(self):
-        return f'Наименование: {self.name}'
+        return self.name
 
     class Meta:
         verbose_name = 'Должность'
