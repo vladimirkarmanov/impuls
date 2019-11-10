@@ -116,6 +116,9 @@ USE_TZ = True
 # User model
 AUTH_USER_MODEL = 'register.User'
 
+# User login system
+LOGIN_REDIRECT_URL = '/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
