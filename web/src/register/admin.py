@@ -11,7 +11,7 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ('username',)
 
     def get_full_name(self, obj):
-        return f'{obj.first_name} {obj.last_name} {obj.patronymic}'
+        return f'{obj.last_name} {obj.first_name} {obj.patronymic}'
 
     def get_user_groups(self, obj):
         groups = Group.objects.all()
