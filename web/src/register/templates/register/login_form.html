@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-    Регистрация
+    Вход в систему
 {% endblock %}
 
 {% block content %}
-    <section id="signup">
+    <section id="login">
         <div class="container pt-5">
             <div class="row text-center">
                 <div class="col-4 offset-4">
-                    <h2>Регистрация</h2>
+                    <h2>Вход</h2>
 
-                    <form method="POST" action="{% url 'listener_signup_url' %}">
+                    <form method="POST" action="{% url 'user_login_url' %}">
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="form-group">
@@ -21,10 +21,10 @@
                                 {% endfor %}
                             </div>
                         {% endfor %}
-                        <button class="btn btn-primary" type="submit">Зарегестрироваться</button>
+                        <button class="btn btn-primary" type="submit">Войти</button>
                     </form>
 
-                    <p>Уже есть аккаунт? <a href="{% url 'user_login_url' %}">Войти</a></p>
+                    <p>Нет аккаунта? <a href="{% url 'listener_signup_url' %}">Регистрация</a></p>
                 </div>
             </div>
         </div>

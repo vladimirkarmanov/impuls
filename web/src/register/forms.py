@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group
 
 from .models import User, JobPlace, JobPosition
@@ -62,3 +62,18 @@ class ListenerSignUpForm(UserCreationForm):
             'job_position': forms.Select(attrs={'class': 'form-control',
                                                 'placeholder': 'Должность'})
         }
+
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control',
+                                      'placeholder': 'Логин'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control',
+                                          'placeholder': 'Пароль'})
+    )
+
+    class Meta:
+        model = User
+        fields = ('username', 'password')
