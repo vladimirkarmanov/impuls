@@ -2,14 +2,16 @@ from django.db import models
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Наименование')
+    name = models.CharField(max_length=150,
+                            unique=True,
+                            verbose_name='Наименование')
     organizer = models.ForeignKey('EventOrganizer',
                                   on_delete=models.DO_NOTHING,
                                   related_name='events',
                                   verbose_name='Организатор')
 
     def __str__(self):
-        return f'Наименование: {self.name}'
+        return self.name
 
     class Meta:
         verbose_name = 'Мероприятие'
@@ -17,7 +19,9 @@ class Event(models.Model):
 
 
 class EventOrganizer(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Наименование')
+    name = models.CharField(max_length=150,
+                            unique=True,
+                            verbose_name='Наименование')
     phone = models.CharField(max_length=11, verbose_name='Телефон')
     address = models.CharField(max_length=120, verbose_name='Адрес')
 
@@ -30,11 +34,12 @@ class EventOrganizer(models.Model):
 
 
 class EventDate(models.Model):
-    start_date = models.DateField(blank=True, null=True,
+    start_date = models.DateField(null=True,
                                   verbose_name='Дата начала')
-    end_date = models.DateField(blank=True, null=True,
+    end_date = models.DateField(null=True,
                                 verbose_name='Дата окончания')
-    event = models.ForeignKey(Event, on_delete=models.CASCADE,
+    event = models.ForeignKey(Event,
+                              on_delete=models.CASCADE,
                               related_name='dates',
                               verbose_name='Мероприятие')
 
@@ -49,13 +54,14 @@ class EventDate(models.Model):
 
 class PressRelease(models.Model):
     file = models.FileField(verbose_name='Файл')
-    event_date = models.OneToOneField(EventDate, on_delete=models.CASCADE,
+    event_date = models.OneToOneField(EventDate,
+                                      on_delete=models.DO_NOTHING,
                                       primary_key=True,
                                       related_name='press_release',
                                       verbose_name='Дата мероприятия')
 
     def __str__(self):
-        return f'Пресс релиз: {self.file.name}'
+        return self.file.name
 
     class Meta:
         verbose_name = 'Пресс релиз'

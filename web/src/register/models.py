@@ -3,13 +3,14 @@ from django.db import models
 
 
 class User(AbstractUser):
-    first_name = models.CharField(max_length=30, blank=False,
+    first_name = models.CharField(max_length=30,
                                   verbose_name='Имя')
-    last_name = models.CharField(max_length=30, blank=False,
+    last_name = models.CharField(max_length=30,
                                  verbose_name='Фамилия')
-    patronymic = models.CharField(max_length=30, blank=False,
+    patronymic = models.CharField(max_length=30,
+                                  blank=False,
                                   verbose_name='Отчество')
-    email = models.EmailField(max_length=70, blank=False,
+    email = models.EmailField(max_length=70,
                               verbose_name='Email')
     experience = models.PositiveSmallIntegerField(default=0,
                                                   blank=True,
@@ -32,7 +33,7 @@ class User(AbstractUser):
                                     verbose_name='Мероприятия')
 
     def __str__(self):
-        return f'Логин: {self.username}, email: {self.email}'
+        return f'Никнейм: {self.username}, email: {self.email}'
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -40,7 +41,8 @@ class User(AbstractUser):
 
 
 class JobPlace(models.Model):
-    name = models.CharField(max_length=150, unique=True,
+    name = models.CharField(max_length=150,
+                            unique=True,
                             verbose_name='Наименование')
 
     def __str__(self):
@@ -52,7 +54,8 @@ class JobPlace(models.Model):
 
 
 class JobPosition(models.Model):
-    name = models.CharField(max_length=150, unique=True,
+    name = models.CharField(max_length=150,
+                            unique=True,
                             verbose_name='Должность')
 
     def __str__(self):
@@ -64,23 +67,30 @@ class JobPosition(models.Model):
 
 
 class AdditionalUserInfo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE,
                                 primary_key=True,
                                 related_name='additional_info',
                                 verbose_name='Пользователь')
-    country = models.CharField(max_length=30, default='Россия',
+    country = models.CharField(max_length=30,
+                               default='Россия',
                                verbose_name='Страна')
-    region = models.CharField(max_length=50, blank=True,
+    region = models.CharField(max_length=50,
                               verbose_name='Регион')
-    city = models.CharField(max_length=30, blank=True,
+    city = models.CharField(max_length=30,
                             verbose_name='Город')
-    address = models.CharField(max_length=120, blank=True,
+    address = models.CharField(max_length=120,
+                               blank=True,
                                verbose_name='Адрес')
-    phone = models.CharField(max_length=11, blank=True,
-                             null=True, verbose_name='Телефон')
-    mail_index = models.PositiveIntegerField(blank=True, null=True,
+    phone = models.CharField(max_length=11,
+                             blank=True,
+                             null=True,
+                             verbose_name='Телефон')
+    mail_index = models.PositiveIntegerField(blank=True,
+                                             null=True,
                                              verbose_name='Почтовый индекс')
-    about = models.TextField(max_length=500, blank=True,
+    about = models.TextField(max_length=500,
+                             blank=True,
                              verbose_name='Обо мне')
 
     def __str__(self):
