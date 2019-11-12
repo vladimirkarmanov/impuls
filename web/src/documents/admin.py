@@ -32,9 +32,10 @@ class DocumentTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Contract)
 class ContractAdmin(admin.ModelAdmin):
-    list_display = ('number', 'date', 'status', 'document_regulation', 'user')
+    list_display = ('number', 'status', 'start_date',
+                    'end_date', 'document_regulation', 'user')
     list_display_links = ('number',)
-    list_filter = ('date', 'status')
+    list_filter = ('start_date', 'end_date', 'status')
     search_fields = ('number',)
 
     class Meta:

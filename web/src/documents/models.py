@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 
 class Document(models.Model):
@@ -41,8 +42,12 @@ class DocumentType(models.Model):
 
 class Contract(models.Model):
     number = models.CharField(max_length=50, unique=True, verbose_name='Номер')
-    date = models.DateField(auto_now_add=True, verbose_name='Дата')
     status = models.BooleanField(default=True, verbose_name='Статус')
+    start_date = models.DateField(default=now,
+                                  verbose_name='Дата заключения')
+    end_date = models.DateField(blank=True,
+                                null=True,
+                                verbose_name='Дата завершения')
     document_regulation = models.ForeignKey('DocumentRegulation',
                                             on_delete=models.DO_NOTHING,
                                             related_name='contracts',
@@ -54,7 +59,7 @@ class Contract(models.Model):
                              verbose_name='Пользователь')
 
     def __str__(self):
-        return f'Номер: {self.number}, дата: {self.date},' \
+        return f'Номер: {self.number}, дата заключения: {self.start_date},' \
                f' статус: {"Активен" if self.status else "Неактивен"}'
 
     class Meta:
