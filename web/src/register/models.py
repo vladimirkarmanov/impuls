@@ -8,7 +8,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=30,
                                  verbose_name='Фамилия')
     patronymic = models.CharField(max_length=30,
-                                  blank=False,
+                                  blank=True,
                                   verbose_name='Отчество')
     email = models.EmailField(max_length=70,
                               verbose_name='Email')
