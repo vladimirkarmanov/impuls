@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group
 
 from .models import User, JobPlace, JobPosition, AdditionalUserInfo
+from .validators import phone_regex, mail_index_regex
 
 
 class ListenerSignUpForm(UserCreationForm):
@@ -50,11 +51,13 @@ class ListenerSignUpForm(UserCreationForm):
     phone = forms.CharField(
         max_length=11,
         required=False,
+        validators=(phone_regex,),
         widget=forms.TextInput(attrs={'class': 'form-control',
                                       'placeholder': 'Телефон'})
     )
-    mail_index = forms.IntegerField(
+    mail_index = forms.CharField(
         required=False,
+        validators=(mail_index_regex,),
         widget=forms.TextInput(attrs={'class': 'form-control',
                                       'placeholder': 'Почтовый индекс'})
     )
