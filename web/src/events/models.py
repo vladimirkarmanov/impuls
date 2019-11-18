@@ -9,6 +9,10 @@ class Event(models.Model):
                                   on_delete=models.DO_NOTHING,
                                   related_name='events',
                                   verbose_name='Организатор')
+    users = models.ManyToManyField('register.User',
+                                   related_name='events',
+                                   blank=True,
+                                   verbose_name='Пользователи')
 
     def __str__(self):
         return self.name

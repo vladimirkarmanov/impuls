@@ -27,10 +27,6 @@ class User(AbstractUser):
                                      blank=True,
                                      null=True,
                                      verbose_name='Должность')
-    events = models.ManyToManyField('events.Event',
-                                    related_name='users',
-                                    blank=True,
-                                    verbose_name='Мероприятия')
 
     def __str__(self):
         return f'Никнейм: {self.username}, email: {self.email}'
