@@ -21,8 +21,7 @@ class DocumentTypeAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
     def get_documents(self, obj):
-        documents = Document.objects.filter(document_type=obj)
-        return ' | '.join(str(document) for document in documents)
+        return ' | '.join(str(document) for document in obj.documents.all())
 
     get_documents.short_description = 'Документы'
 
@@ -49,8 +48,7 @@ class DocumentRegulationAdmin(admin.ModelAdmin):
     search_fields = ('document_type',)
 
     def get_contracts(self, obj):
-        contracts = Contract.objects.filter(document_regulation=obj)
-        return ' | '.join(str(contract) for contract in contracts)
+        return ' | '.join(str(contract) for contract in obj.contracts.all())
 
     get_contracts.short_description = 'Договоры'
 
