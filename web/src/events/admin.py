@@ -16,8 +16,7 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
     def get_start_dates(self, obj):
-        dates = EventDate.objects.filter(event=obj)
-        return ' | '.join(str(date.start_date) for date in dates)
+        return ' | '.join(str(date.start_date) for date in obj.dates.all())
 
     get_start_dates.short_description = 'Даты начала'
     get_start_dates.admin_order_field = 'dates__start_date'
@@ -34,10 +33,9 @@ class EventOrganizerAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
     def get_events(self, obj):
-        events = Event.objects.filter(organizer=obj)
-        return ' | '.join(event.name for event in events)
+        return ' | '.join(str(event.name) for event in obj.events.all())
 
-    get_events.short_description = 'Мероприятие'
+    get_events.short_description = 'Мероприятия'
 
     class Meta:
         model = EventOrganizer
