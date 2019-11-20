@@ -63,3 +63,6 @@ class CustomUserAdmin(UserAdmin):
 
     class Meta:
         model = User
+
+
+admin.site.unregister(Group)
