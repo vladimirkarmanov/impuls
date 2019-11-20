@@ -15,6 +15,7 @@ class CustomUserAdmin(UserAdmin):
     inlines = (AdditionalUserInfoInline,)
     list_display = ('get_full_name', 'username', 'email', 'get_user_groups',
                     'is_staff')
+    list_display_links = ('username',)
 
     readonly_fields = ('date_joined', 'last_login', 'is_superuser')
     fieldsets = (
@@ -60,6 +61,12 @@ class CustomUserAdmin(UserAdmin):
         group.user_set.add(obj)
         group.save()
         super().save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if not request.user.is_superuser:
+            return queryset.filter(is_superuser=False)
+        return queryset
 
     class Meta:
         model = User
