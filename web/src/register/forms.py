@@ -3,69 +3,33 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import Group
 
 from .models import User, JobPlace, JobPosition, AdditionalUserInfo
-from .validators import phone_regex, mail_index_regex
 
 
 class ListenerSignUpForm(UserCreationForm):
     job_place = forms.ModelChoiceField(
+        label='Место работы',
         queryset=JobPlace.objects.all(),
         required=False,
-        widget=forms.Select(attrs={'class': 'form-control',
-                                   'placeholder': 'Место работы'})
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
     job_position = forms.ModelChoiceField(
+        label='Должность',
         queryset=JobPosition.objects.all(),
         required=False,
-        widget=forms.Select(attrs={'class': 'form-control',
-                                   'placeholder': 'Должность'})
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
     password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                          'placeholder': 'Пароль'})
+        label='Пароль',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
     password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                          'placeholder': 'Повторите пароль'})
+        label='Повторите пароль',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
-    country = forms.CharField(
-        max_length=30,
-        widget=forms.TextInput(attrs={'class': 'form-control',
-                                      'placeholder': 'Страна'})
-    )
-    region = forms.CharField(
-        max_length=50,
-        widget=forms.TextInput(attrs={'class': 'form-control',
-                                      'placeholder': 'Регион'})
-    )
-    city = forms.CharField(
-        max_length=30,
-        widget=forms.TextInput(attrs={'class': 'form-control',
-                                      'placeholder': 'Город'})
-    )
-    address = forms.CharField(
-        max_length=120,
+    is_paper = forms.BooleanField(
+        label='Получить бумажную версию документа',
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control',
-                                      'placeholder': 'Адрес'})
-    )
-    phone = forms.CharField(
-        max_length=11,
-        required=False,
-        validators=(phone_regex,),
-        widget=forms.TextInput(attrs={'class': 'form-control',
-                                      'placeholder': 'Телефон'})
-    )
-    mail_index = forms.CharField(
-        required=False,
-        validators=(mail_index_regex,),
-        widget=forms.TextInput(attrs={'class': 'form-control',
-                                      'placeholder': 'Почтовый индекс'})
-    )
-    about = forms.CharField(
-        max_length=500,
-        required=False,
-        widget=forms.Textarea(attrs={'class': 'form-control',
-                                     'placeholder': 'Обо мне'})
+        widget=forms.CheckboxInput(attrs={'class': ''})
     )
 
     def __init__(self, *args, **kwargs):
@@ -77,16 +41,6 @@ class ListenerSignUpForm(UserCreationForm):
         group, created = Group.objects.get_or_create(name='Слушатели')
         group.user_set.add(user)
         group.save()
-        AdditionalUserInfo.objects.create(
-            user=user,
-            country=self.cleaned_data['country'],
-            region=self.cleaned_data['region'],
-            city=self.cleaned_data['city'],
-            address=self.cleaned_data['address'],
-            phone=self.cleaned_data['phone'],
-            mail_index=self.cleaned_data['mail_index'],
-            about=self.cleaned_data['about']
-        )
         return user
 
     class Meta:
@@ -98,29 +52,39 @@ class ListenerSignUpForm(UserCreationForm):
                   'password1', 'password2')
 
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control',
-                                                 'placeholder': 'Имя'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control',
-                                                'placeholder': 'Фамилия'}),
-            'patronymic': forms.TextInput(attrs={'class': 'form-control',
-                                                 'placeholder': 'Отчество'}),
-            'username': forms.TextInput(attrs={'class': 'form-control',
-                                               'placeholder': 'Логин'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control',
-                                             'placeholder': 'Email'}),
-            'experience': forms.NumberInput(attrs={'class': 'form-control',
-                                                   'placeholder': 'Опыт работы'})
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'patronymic': forms.TextInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'experience': forms.NumberInput(attrs={'class': 'form-control'})
+        }
+
+
+class AdditionalInfoForm(forms.ModelForm):
+    class Meta:
+        model = AdditionalUserInfo
+        fields = ('country', 'region', 'city', 'address',
+                  'phone', 'mail_index', 'about')
+
+        widgets = {
+            'country': forms.TextInput(attrs={'class': 'form-control'}),
+            'region': forms.TextInput(attrs={'class': 'form-control'}),
+            'city': forms.TextInput(attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'mail_index': forms.TextInput(attrs={'class': 'form-control'}),
+            'about': forms.Textarea(attrs={'class': 'form-control',
+                                           'style': 'resize: none;'})
         }
 
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control',
-                                      'placeholder': 'Логин'})
+        widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control',
-                                          'placeholder': 'Пароль'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
 
     class Meta:

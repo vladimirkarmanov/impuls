@@ -7,24 +7,25 @@
 {% block content %}
     <section id="login">
         <div class="container pt-5">
-            <div class="row text-center">
-                <div class="col-4 offset-4">
-                    <h2>Вход</h2>
+            <div class="row">
+                <div class="col-4 mx-auto">
+                    <h2 class="text-center">Вход</h2>
 
-                    <form method="POST" action="{% url 'user_login_url' %}">
+                    <form class="d-flex flex-column" method="POST" action="{% url 'user_login_url' %}">
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="form-group">
+                                {{ field.label_tag }}
                                 {{ field }}
                                 {% for error in field.errors %}
                                     <div class="alert alert-danger">{{ error }}</div>
                                 {% endfor %}
                             </div>
                         {% endfor %}
-                        <button class="btn btn-primary" type="submit">Войти</button>
+                        <button class="btn btn-primary align-self-center" type="submit">Войти</button>
                     </form>
 
-                    <p>Нет аккаунта? <a href="{% url 'listener_signup_url' %}">Регистрация</a></p>
+                    <p class="text-center">Нет аккаунта? <a href="{% url 'listener_signup_url' %}">Регистрация</a></p>
                 </div>
             </div>
         </div>

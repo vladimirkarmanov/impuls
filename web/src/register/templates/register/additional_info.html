@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block page_title %}
-    Регистрация
+    Получение бумажной версии документа
 {% endblock %}
 
 {% block content %}
-    <section id="signup">
+    <section id="additional_info">
         <div class="container pt-5">
             <div class="row">
                 <div class="col-4 mx-auto">
-                    <h2 class="text-center">Регистрация</h2>
+                    <h2 class="text-center">Получение бумажной версии документа</h2>
 
-                    <form class="d-flex flex-column" method="POST" action="{% url 'listener_signup_url' %}">
+                    <form class="d-flex flex-column" method="POST" action="{% url 'additional_info_url' %}">
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="form-group">
@@ -22,10 +22,9 @@
                                 {% endfor %}
                             </div>
                         {% endfor %}
-                        <button class="btn btn-primary align-self-center" type="submit">Зарегестрироваться</button>
+                        <button class="btn btn-primary align-self-center" type="submit">Отправить</button>
                     </form>
 
-                    <p class="text-center">Уже есть аккаунт? <a href="{% url 'user_login_url' %}">Войти</a></p>
                 </div>
             </div>
         </div>

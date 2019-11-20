@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from .validators import phone_regex, mail_index_regex
+
 
 class User(AbstractUser):
     first_name = models.CharField(max_length=30,
@@ -81,10 +83,12 @@ class AdditionalUserInfo(models.Model):
     phone = models.CharField(max_length=11,
                              blank=True,
                              null=True,
-                             verbose_name='Телефон')
+                             verbose_name='Телефон',
+                             validators=[phone_regex])
     mail_index = models.PositiveIntegerField(blank=True,
                                              null=True,
-                                             verbose_name='Почтовый индекс')
+                                             verbose_name='Почтовый индекс',
+                                             validators=[mail_index_regex])
     about = models.TextField(max_length=500,
                              blank=True,
                              verbose_name='Обо мне')
