@@ -85,10 +85,10 @@ class AdditionalUserInfo(models.Model):
                              null=True,
                              verbose_name='Телефон',
                              validators=[phone_regex])
-    mail_index = models.PositiveIntegerField(blank=True,
-                                             null=True,
-                                             verbose_name='Почтовый индекс',
-                                             validators=[mail_index_regex])
+    mail_index = models.CharField(max_length=6,
+                                  blank=True,
+                                  verbose_name='Почтовый индекс',
+                                  validators=[mail_index_regex])
     about = models.TextField(max_length=500,
                              blank=True,
                              verbose_name='Обо мне')
