@@ -82,7 +82,6 @@ class AdditionalUserInfo(models.Model):
                                verbose_name='Адрес')
     phone = models.CharField(max_length=11,
                              blank=True,
-                             null=True,
                              verbose_name='Телефон',
                              validators=[phone_regex])
     mail_index = models.CharField(max_length=6,
