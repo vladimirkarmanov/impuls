@@ -78,18 +78,14 @@ class AdditionalUserInfo(models.Model):
     city = models.CharField(max_length=30,
                             verbose_name='Город')
     address = models.CharField(max_length=120,
-                               blank=True,
                                verbose_name='Адрес')
     phone = models.CharField(max_length=11,
-                             blank=True,
                              verbose_name='Телефон',
                              validators=[phone_regex])
     mail_index = models.CharField(max_length=6,
-                                  blank=True,
                                   verbose_name='Почтовый индекс',
                                   validators=[mail_index_regex])
     about = models.TextField(max_length=500,
-                             blank=True,
                              verbose_name='Обо мне')
 
     def __str__(self):
