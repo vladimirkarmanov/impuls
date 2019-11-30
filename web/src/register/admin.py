@@ -47,7 +47,7 @@ class CustomUserAdmin(UserAdmin):
     )
 
     def get_full_name(self, obj):
-        return f'{obj.last_name} {obj.first_name} {obj.patronymic}'
+        return obj.get_full_name()
 
     def get_user_groups(self, obj):
         return [group.name for group in obj.groups.all()]
