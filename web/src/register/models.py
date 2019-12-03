@@ -1,17 +1,20 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from .validators import phone_regex, mail_index_regex
+from .validators import phone_regex, mail_index_regex, only_chars
 
 
 class User(AbstractUser):
     first_name = models.CharField(max_length=30,
-                                  verbose_name='Имя')
+                                  verbose_name='Имя',
+                                  validators=[only_chars])
     last_name = models.CharField(max_length=30,
-                                 verbose_name='Фамилия')
+                                 verbose_name='Фамилия',
+                                 validators=[only_chars])
     patronymic = models.CharField(max_length=30,
                                   blank=True,
-                                  verbose_name='Отчество')
+                                  verbose_name='Отчество',
+                                  validators=[only_chars])
     email = models.EmailField(max_length=70,
                               verbose_name='Email')
     email_confirmed = models.BooleanField(default=False)
@@ -76,11 +79,14 @@ class AdditionalUserInfo(models.Model):
                                 verbose_name='Пользователь')
     country = models.CharField(max_length=30,
                                default='Россия',
-                               verbose_name='Страна')
+                               verbose_name='Страна',
+                               validators=[only_chars])
     region = models.CharField(max_length=50,
-                              verbose_name='Регион')
+                              verbose_name='Регион',
+                              validators=[only_chars])
     city = models.CharField(max_length=30,
-                            verbose_name='Город')
+                            verbose_name='Город',
+                            validators=[only_chars])
     address = models.CharField(max_length=120,
                                verbose_name='Адрес')
     phone = models.CharField(max_length=11,
