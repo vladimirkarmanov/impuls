@@ -17,6 +17,11 @@ class TestUserModel:
         assert user._meta.get_field('patronymic').max_length == 30
         assert user._meta.get_field('email').max_length == 70
 
+    def test_fields_has_valid_default_values(self):
+        user = User.objects.first()
+        assert user._meta.get_field('email_confirmed').default is False
+        assert user._meta.get_field('experience').default == 0
+
 
 @pytest.mark.django_db
 class TestAdditionalUserInfoModel:
@@ -37,6 +42,10 @@ class TestAdditionalUserInfoModel:
         assert info._meta.get_field('phone').max_length == 11
         assert info._meta.get_field('mail_index').max_length == 6
         assert info._meta.get_field('about').max_length == 500
+
+    def test_fields_has_valid_default_values(self):
+        info = AdditionalUserInfo.objects.first()
+        assert info._meta.get_field('country').default == 'Россия'
 
 
 @pytest.mark.django_db
