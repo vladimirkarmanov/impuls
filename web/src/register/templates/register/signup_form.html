@@ -14,13 +14,7 @@
                     <form class="d-flex flex-column" method="POST" action="{% url 'listener_signup_url' %}">
                         {% csrf_token %}
                         {% for field in form %}
-                            <div class="form-group">
-                                {{ field.label_tag }} {% if field.field.required %} <span style="color:red;">*</span> {% endif %}
-                                {{ field }}
-                                {% for error in field.errors %}
-                                    <div class="alert alert-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
+                            {% include "register/includes/form_fields.html" %}
                         {% endfor %}
                         <button class="btn btn-primary align-self-center" type="submit">Зарегестрироваться</button>
                     </form>
