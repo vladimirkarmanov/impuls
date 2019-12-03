@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import Group
 
 from .models import User, JobPlace, JobPosition, AdditionalUserInfo
 
@@ -18,38 +17,19 @@ class ListenerSignUpForm(UserCreationForm):
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    password1 = forms.CharField(
-        label='Пароль',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
-    )
-    password2 = forms.CharField(
-        label='Повторите пароль',
-        widget=forms.PasswordInput(attrs={'class': 'form-control'})
-    )
-    is_paper = forms.BooleanField(
-        label='Получить бумажную версию документа',
-        required=False,
-        widget=forms.CheckboxInput(attrs={'class': ''})
-    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['experience'].min_value = 0
-
-    def save(self, *args, **kwargs):
-        user = super().save()
-        group, created = Group.objects.get_or_create(name='Слушатели')
-        group.user_set.add(user)
-        group.save()
-        return user
+        del self.fields['password1']
+        del self.fields['password2']
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name',
                   'patronymic', 'username',
                   'email', 'experience',
-                  'job_place', 'job_position',
-                  'password1', 'password2')
+                  'job_place', 'job_position')
 
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),

@@ -14,6 +14,7 @@ class User(AbstractUser):
                                   verbose_name='Отчество')
     email = models.EmailField(max_length=70,
                               verbose_name='Email')
+    email_confirmed = models.BooleanField(default=False)
     experience = models.PositiveSmallIntegerField(default=0,
                                                   blank=True,
                                                   verbose_name='Стаж')

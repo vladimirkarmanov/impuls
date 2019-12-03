@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Аккаунт активирован
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row text-center">
+            <div class="col-6 mx-auto">
+                <h2>Ваш аккаунт успешно активирован, пароль для входа смотрите на вашем почтовом ящике.</h2>
+                <a href="{% url 'user_login_url' %}">Войти в аккаунт</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
