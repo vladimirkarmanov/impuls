@@ -14,18 +14,13 @@
                     <form class="d-flex flex-column" method="POST" action="{% url 'user_login_url' %}">
                         {% csrf_token %}
                         {% for field in form %}
-                            <div class="form-group">
-                                {{ field.label_tag }}
-                                {{ field }}
-                                {% for error in field.errors %}
-                                    <div class="alert alert-danger">{{ error }}</div>
-                                {% endfor %}
-                            </div>
+                            {% include "register/includes/form_fields.html" %}
                         {% endfor %}
                         <button class="btn btn-primary align-self-center" type="submit">Войти</button>
                     </form>
 
                     <p class="text-center">Нет аккаунта? <a href="{% url 'listener_signup_url' %}">Регистрация</a></p>
+                    <p class="text-center">Забыли пароль? <a href="{% url 'password_reset' %}">Сбросить</a></p>
                 </div>
             </div>
         </div>

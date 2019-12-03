@@ -1,4 +1,9 @@
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import (LoginView,
+                                       LogoutView,
+                                       PasswordResetView,
+                                       PasswordResetDoneView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetCompleteView)
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -6,7 +11,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView
 
 from .forms import (ListenerSignUpForm,
@@ -72,3 +77,20 @@ class UserLoginView(LoginView):
 
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('user_login_url')
+
+
+class UserPasswordResetView(PasswordResetView):
+    template_name = 'register/password_reset/password_reset_form.html'
+    email_template_name = 'register/password_reset/password_reset_email.html'
+
+
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'register/password_reset/password_reset_form.html'
+
+
+class UserPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'register/password_reset/password_reset_done.html'
+
+
+class UserPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'register/password_reset/password_reset_complete.html'
