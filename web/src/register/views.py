@@ -85,7 +85,7 @@ class UserPasswordResetView(PasswordResetView):
 
 
 class UserPasswordResetConfirmView(PasswordResetConfirmView):
-    template_name = 'register/password_reset/password_reset_form.html'
+    template_name = 'register/password_reset/password_reset_confirm.html'
 
 
 class UserPasswordResetDoneView(PasswordResetDoneView):
