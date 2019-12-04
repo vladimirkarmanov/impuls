@@ -57,9 +57,7 @@ class CustomUserAdmin(UserAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.save()
-        group, created = Group.objects.get_or_create(name='Преподаватели')
-        group.user_set.add(obj)
-        group.save()
+        obj.add_user_to_group_teachers()
         super().save_model(request, obj, form, change)
 
     def get_queryset(self, request):

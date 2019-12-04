@@ -17,7 +17,7 @@ from django.views.generic import CreateView
 from .forms import (ListenerSignUpForm,
                     UserLoginForm,
                     AdditionalInfoForm)
-from .services import *
+from .models import User
 from .tokens import account_activation_token
 
 
@@ -51,8 +51,8 @@ def activate_account(request, uidb64, token):
         user = None
 
     if user is not None and account_activation_token.check_token(user, token):
-        activate_user_accout_after_email_confirm(user)
-        add_user_to_group_listeners(user)
+        user.activate_user_accout_after_email_confirm()
+        user.add_user_to_group_listeners()
         return render(request, 'register/success_activate_account.html')
     else:
         return HttpResponse('Срок действия этой ссылки истек!')

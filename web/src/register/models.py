@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 
 from .validators import phone_regex, mail_index_regex, only_chars
@@ -39,6 +39,25 @@ class User(AbstractUser):
 
     def get_full_name(self):
         return f'{self.last_name} {self.first_name} {self.patronymic}'.strip()
+
+    def activate_user_accout_after_email_confirm(self):
+        self.is_active = True
+        self.email_confirmed = True
+        password = User.objects.make_random_password()
+        self.set_password(password)
+        self.email_user(subject='Доступ к аккаунту',
+                        message=f'Ваш пароль: {password}')
+        self.save()
+
+    def add_user_to_group_listeners(self):
+        group, created = Group.objects.get_or_create(name='Слушатели')
+        group.user_set.add(self)
+        group.save()
+
+    def add_user_to_group_teachers(self):
+        group, created = Group.objects.get_or_create(name='Преподаватели')
+        group.user_set.add(self)
+        group.save()
 
     class Meta:
         verbose_name = 'Пользователь'
