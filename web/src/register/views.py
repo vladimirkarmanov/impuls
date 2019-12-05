@@ -3,7 +3,9 @@ from django.contrib.auth.views import (LoginView,
                                        PasswordResetView,
                                        PasswordResetDoneView,
                                        PasswordResetConfirmView,
-                                       PasswordResetCompleteView)
+                                       PasswordResetCompleteView,
+                                       PasswordChangeView,
+                                       PasswordChangeDoneView)
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -24,7 +26,7 @@ from .tokens import account_activation_token
 class ListenerSignupView(CreateView):
     form_class = ListenerSignUpForm
     template_name = 'register/signup_form.html'
-    success_url = reverse_lazy('listener_signup_url')
+    success_url = reverse_lazy('listener_signup')
 
     def form_valid(self, form):
         user = User.objects.create_user(**form.cleaned_data, is_active=False)
@@ -61,7 +63,7 @@ def activate_account(request, uidb64, token):
 class AdditionalInfoView(CreateView):
     form_class = AdditionalInfoForm
     template_name = 'register/additional_info.html'
-    success_url = reverse_lazy('listener_signup_url')
+    success_url = reverse_lazy('listener_signup')
 
     def form_valid(self, form):
         additional_info = form.save(commit=False)
@@ -76,7 +78,7 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LogoutView):
-    next_page = reverse_lazy('user_login_url')
+    next_page = reverse_lazy('user_login')
 
 
 class UserPasswordResetView(PasswordResetView):
@@ -94,3 +96,11 @@ class UserPasswordResetDoneView(PasswordResetDoneView):
 
 class UserPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'register/password_reset/password_reset_complete.html'
+
+
+class UserPasswordChangeView(PasswordChangeView):
+    template_name = 'register/password_change/password_change_form.html'
+
+
+class UserPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'register/password_change/password_change_done.html'
