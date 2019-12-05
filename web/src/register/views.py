@@ -15,6 +15,7 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import (ListenerSignUpForm,
                     UserLoginForm,
@@ -60,7 +61,7 @@ def activate_account(request, uidb64, token):
         return HttpResponse('Срок действия этой ссылки истек!')
 
 
-class AdditionalInfoView(CreateView):
+class AdditionalInfoView(LoginRequiredMixin, CreateView):
     form_class = AdditionalInfoForm
     template_name = 'register/additional_info.html'
     success_url = reverse_lazy('listener_signup')
@@ -78,7 +79,7 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LogoutView):
-    next_page = reverse_lazy('user_login')
+    pass
 
 
 class UserPasswordResetView(PasswordResetView):
@@ -98,9 +99,9 @@ class UserPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'register/password_reset/password_reset_complete.html'
 
 
-class UserPasswordChangeView(PasswordChangeView):
+class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = 'register/password_change/password_change_form.html'
 
 
-class UserPasswordChangeDoneView(PasswordChangeDoneView):
+class UserPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = 'register/password_change/password_change_done.html'
