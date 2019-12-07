@@ -20,7 +20,7 @@ class DocumentTypeAdmin(admin.ModelAdmin):
     list_filter = ('event',)
     search_fields = ('name',)
 
-    def get_documents(self, obj):
+    def get_documents(self, obj) -> str:
         return ' | '.join(str(document) for document in obj.documents.all())
 
     get_documents.short_description = 'Документы'
@@ -47,7 +47,7 @@ class DocumentRegulationAdmin(admin.ModelAdmin):
     list_display_links = ('document_type',)
     search_fields = ('document_type',)
 
-    def get_contracts(self, obj):
+    def get_contracts(self, obj) -> str:
         return ' | '.join(str(contract) for contract in obj.contracts.all())
 
     get_contracts.short_description = 'Договоры'

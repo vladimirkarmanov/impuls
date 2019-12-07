@@ -18,7 +18,7 @@ class ListenerSignUpForm(UserCreationForm):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.fields['experience'].min_value = 0
         del self.fields['password1']

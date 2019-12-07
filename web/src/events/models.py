@@ -14,7 +14,7 @@ class Event(models.Model):
                                    blank=True,
                                    verbose_name='Пользователи')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     class Meta:
@@ -29,7 +29,7 @@ class EventOrganizer(models.Model):
     phone = models.CharField(max_length=11, verbose_name='Телефон')
     address = models.CharField(max_length=120, verbose_name='Адрес')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Наименование: {self.name}, телефон: {self.phone}'
 
     class Meta:
@@ -47,7 +47,7 @@ class EventDate(models.Model):
                               related_name='dates',
                               verbose_name='Мероприятие')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Дата начала: {self.start_date},' \
                f' дата окончания: {self.end_date}'
 
@@ -64,7 +64,7 @@ class PressRelease(models.Model):
                                       related_name='press_release',
                                       verbose_name='Дата мероприятия')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.file.name
 
     class Meta:

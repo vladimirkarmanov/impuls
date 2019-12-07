@@ -37,10 +37,10 @@ class User(AbstractUser):
     def __str__(self):
         return f'Никнейм: {self.username}, email: {self.email}'
 
-    def get_full_name(self):
+    def get_full_name(self) -> str:
         return f'{self.last_name} {self.first_name} {self.patronymic}'.strip()
 
-    def activate_user_accout_after_email_confirm(self):
+    def activate_user_accout_after_email_confirm(self) -> None:
         self.is_active = True
         self.email_confirmed = True
         password = User.objects.make_random_password()
@@ -49,12 +49,12 @@ class User(AbstractUser):
                         message=f'Ваш пароль: {password}')
         self.save()
 
-    def add_user_to_group_listeners(self):
+    def add_user_to_group_listeners(self) -> None:
         group, created = Group.objects.get_or_create(name='Слушатели')
         group.user_set.add(self)
         group.save()
 
-    def add_user_to_group_teachers(self):
+    def add_user_to_group_teachers(self) -> None:
         group, created = Group.objects.get_or_create(name='Преподаватели')
         group.user_set.add(self)
         group.save()

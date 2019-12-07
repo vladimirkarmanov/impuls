@@ -1,8 +1,10 @@
-from copy import copy
+from typing import List
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
+from django.db.models import QuerySet
+
 from .models import User, AdditionalUserInfo
 
 
@@ -46,21 +48,21 @@ class CustomUserAdmin(UserAdmin):
                                              'is_superuser')})
     )
 
-    def get_full_name(self, obj):
+    def get_full_name(self, obj) -> str:
         return obj.get_full_name()
 
-    def get_user_groups(self, obj):
+    def get_user_groups(self, obj) -> List[str]:
         return [group.name for group in obj.groups.all()]
 
     get_full_name.short_description = 'ФИО'
     get_user_groups.short_description = 'Группы'
 
-    def save_model(self, request, obj, form, change):
+    def save_model(self, request, obj, form, change) -> None:
         obj.save()
         obj.add_user_to_group_teachers()
         super().save_model(request, obj, form, change)
 
-    def get_queryset(self, request):
+    def get_queryset(self, request) -> QuerySet:
         queryset = super().get_queryset(request)
         if not request.user.is_superuser:
             return queryset.filter(is_superuser=False)

@@ -15,7 +15,7 @@ class Document(models.Model):
                                       related_name='documents',
                                       verbose_name='Вид документа')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.number
 
     class Meta:
@@ -32,7 +32,7 @@ class DocumentType(models.Model):
                               related_name='document_types',
                               verbose_name='Мероприятие')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     class Meta:
@@ -58,7 +58,7 @@ class Contract(models.Model):
                              null=True,
                              verbose_name='Пользователь')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Номер: {self.number}, дата заключения: {self.start_date},' \
                f' статус: {"Активен" if self.status else "Неактивен"}'
 
@@ -72,7 +72,7 @@ class DocumentRegulation(models.Model):
                                      unique=True,
                                      verbose_name='Вид документа')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.document_type
 
     class Meta:
