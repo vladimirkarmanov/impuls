@@ -3,5 +3,5 @@
 
     Пожалуйста, перейдите по ссылке ниже, чтобы подтвердить свой email:
 
-    http://{{ domain }}{% url 'activate_account_url' uidb64=uid token=token %}
+    http://{{ domain }}{% url 'activate_account' uidb64=uid token=token %}
 {% endautoescape %}
