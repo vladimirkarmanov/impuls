@@ -27,6 +27,7 @@ from .tokens import account_activation_token
 class ListenerSignupView(UserAlreadyAuthenticatedMixin, CreateView):
     form_class = ListenerSignUpForm
     template_name = 'register/signup_form.html'
+    email_template_name = 'register/account_activation_email.html'
 
     def form_valid(self, form):
         user = User.objects.create_user(**form.cleaned_data, is_active=False)
@@ -34,7 +35,7 @@ class ListenerSignupView(UserAlreadyAuthenticatedMixin, CreateView):
         current_site = get_current_site(self.request)
         user.email_user(
             'Активируйте свой аккаунт',
-            render_to_string('register/account_activation_email.html', {
+            render_to_string(self.email_template_name, {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.id)),
