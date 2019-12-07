@@ -11,7 +11,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -28,7 +27,6 @@ from .tokens import account_activation_token
 class ListenerSignupView(UserAlreadyAuthenticatedMixin, CreateView):
     form_class = ListenerSignUpForm
     template_name = 'register/signup_form.html'
-    success_url = reverse_lazy('listener_signup')
 
     def form_valid(self, form):
         user = User.objects.create_user(**form.cleaned_data, is_active=False)
@@ -65,7 +63,7 @@ def activate_account(request, uidb64, token):
 class AdditionalInfoView(LoginRequiredMixin, CreateView):
     form_class = AdditionalInfoForm
     template_name = 'register/additional_info.html'
-    success_url = reverse_lazy('listener_signup')
+    success_url = '/'
 
     def form_valid(self, form):
         additional_info = form.save(commit=False)
