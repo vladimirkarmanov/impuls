@@ -8,9 +8,11 @@ from ..models import User, AdditionalUserInfo, JobPosition, JobPlace
 class TestUserModel:
     @pytest.fixture(autouse=True)
     def setup(self):
-        User.objects.create(username='oleg', first_name='Олег',
-                            last_name='Иванов', patronymic='Степанович',
-                            password='123456789qwe$')
+        User.objects.create_user(
+            first_name='Олег', last_name='Иванов',
+            patronymic='Степанович', username='oleg',
+            email='oleg@mail.ru', password='123456789qwe$'
+        )
 
     def test_fields_max_length(self):
         user = User.objects.first()
@@ -57,8 +59,11 @@ class TestUserModel:
 class TestAdditionalUserInfoModel:
     @pytest.fixture(autouse=True)
     def setup(self):
-        user = User.objects.create(username='oleg',
-                                   password='123456789qwe$')
+        user = User.objects.create_user(
+            first_name='Олег', last_name='Иванов',
+            patronymic='Степанович', username='oleg',
+            email='oleg@mail.ru', password='123456789qwe$'
+        )
         AdditionalUserInfo.objects.create(user=user,
                                           region='Московская область',
                                           city='Москва')
