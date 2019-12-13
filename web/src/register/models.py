@@ -34,7 +34,7 @@ class User(AbstractUser):
                                      null=True,
                                      verbose_name='Должность')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Никнейм: {self.username}, email: {self.email}'
 
     def get_full_name(self) -> str:
@@ -69,7 +69,7 @@ class JobPlace(models.Model):
                             unique=True,
                             verbose_name='Наименование')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     class Meta:
@@ -82,7 +82,7 @@ class JobPosition(models.Model):
                             unique=True,
                             verbose_name='Должность')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     class Meta:
@@ -117,7 +117,7 @@ class AdditionalUserInfo(models.Model):
     about = models.TextField(max_length=500,
                              verbose_name='Обо мне')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Город: {self.city}, телефон: {self.phone}'
 
     class Meta:
