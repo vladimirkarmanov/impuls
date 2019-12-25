@@ -5,7 +5,27 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.db.models import QuerySet
 
-from .models import User, AdditionalUserInfo
+from .models import User, AdditionalUserInfo, JobPlace, JobPosition
+
+
+@admin.register(JobPosition)
+class JobPositionAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    list_display_links = ('name',)
+    search_fields = ('name',)
+
+    class Meta:
+        model = JobPosition
+
+
+@admin.register(JobPlace)
+class JobPlaceAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    list_display_links = ('name',)
+    search_fields = ('name',)
+
+    class Meta:
+        model = JobPlace
 
 
 class AdditionalUserInfoInline(admin.StackedInline):
