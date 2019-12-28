@@ -1,5 +1,5 @@
-from django.shortcuts import redirect, reverse
 from django.contrib.auth.mixins import AccessMixin
+from django.shortcuts import redirect
 
 
 class UserAlreadyAuthenticatedMixin(AccessMixin):
