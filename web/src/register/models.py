@@ -16,6 +16,7 @@ class User(AbstractUser):
                                   verbose_name='Отчество',
                                   validators=[only_chars])
     email = models.EmailField(max_length=70,
+                              unique=True,
                               verbose_name='Email')
     email_confirmed = models.BooleanField(default=False)
     experience = models.PositiveSmallIntegerField(default=0,
