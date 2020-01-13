@@ -1,0 +1,3 @@
+django-livereload-server
+pytest-django
+pytest
