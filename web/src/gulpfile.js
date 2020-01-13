@@ -20,7 +20,7 @@ gulp.task('livereload', function () {
 
 gulp.task('django', function () {
     const spawn = require('child_process').spawn;
-    let args = ['manage.py', 'runserver'];
+    let args = ['manage.py', 'runserver', '--settings=settings.dev'];
     let runserver = spawn('python', args, {
         stdio: 'inherit'
     });
