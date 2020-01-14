@@ -1,12 +1,25 @@
 import environ
 import os
 
-root = environ.Path(__file__) - 2
+root = environ.Path(__file__) - 3
 env = environ.Env()
+env.read_env(env_file='.env')
 
 BASE_DIR = root()
 
+SECRET_KEY = env.str('SECRET_KEY')
+
 ROOT_URLCONF = 'impuls.urls'
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+]
 
 TEMPLATES = [
     {
