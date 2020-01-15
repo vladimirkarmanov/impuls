@@ -1,3 +1,4 @@
-django
+Django
+six
 django-environ
-mysqlclient
+gunicorn
