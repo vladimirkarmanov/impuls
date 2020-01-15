@@ -1,0 +1,44 @@
+version: '3.5'
+
+services:
+  web:
+    restart: always
+    build: ./web
+    command: gunicorn impuls.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/home/app/src/static
+      - media_volume:/home/app/src/media
+    expose:
+      - 8000
+    env_file: ./web/src/.env
+    depends_on:
+      - db
+    links:
+      - db
+  nginx:
+    restart: always
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/src/static
+      - media_volume:/home/app/src/media
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+  db:
+    restart: always
+    image: mysql
+    ports:
+      - 3306
+    env_file: ./web/src/.env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-u$MYSQL_USER", "-p$MYSQL_PASSWORD",  "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+  static_volume:
+  media_volume:
