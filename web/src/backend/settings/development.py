@@ -1,6 +1,13 @@
+import environ
+
 from .base import *
 
+env = environ.Env()
+env.read_env(env_file='dev.env')
+
 DEBUG = True
+
+SECRET_KEY = env.str('SECRET_KEY')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -29,10 +36,5 @@ DATABASES = {
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
 )
-
-# Media and statifiles
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

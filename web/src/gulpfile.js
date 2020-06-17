@@ -45,12 +45,12 @@ function compileSass(name, path) {
                 })
             )
             .pipe(concatCss(name + '.css'))
-            .pipe(gulp.dest('static/build/'));
+            .pipe(gulp.dest('staticfiles/build/'));
     };
 }
 
 gulp.task('watch', function () {
-    gulp.watch('static/sass/*.sass', compileSass('main', 'static/sass/*.sass'));
+    gulp.watch('staticfiles/sass/*.sass', compileSass('main', 'staticfiles/sass/*.sass'));
 });
 
 gulp.task('default', gulp.parallel('livereload', 'django', 'watch'));
