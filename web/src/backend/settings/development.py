@@ -1,13 +1,8 @@
-import environ
-
 from .base import *
-
-env = environ.Env()
-env.read_env(env_file='dev.env')
 
 DEBUG = True
 
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = '&%%-%z_s*$fj%(^(^0&%5%9!&5%5!0!65%*%VJ!^(^05-_3f&!$a$&u5&&&!'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
