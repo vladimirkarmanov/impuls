@@ -5,40 +5,37 @@ from .validators import phone_regex, mail_index_regex, only_chars
 
 
 class User(AbstractUser):
-    first_name = models.CharField(max_length=30,
-                                  verbose_name='Имя',
-                                  validators=[only_chars])
-    last_name = models.CharField(max_length=30,
-                                 verbose_name='Фамилия',
-                                 validators=[only_chars])
+    first_name = models.CharField(max_length=30, verbose_name='Имя', validators=[only_chars])
+    last_name = models.CharField(max_length=30, verbose_name='Фамилия', validators=[only_chars])
     patronymic = models.CharField(max_length=30,
                                   blank=True,
                                   verbose_name='Отчество',
                                   validators=[only_chars])
-    email = models.EmailField(max_length=70,
-                              unique=True,
-                              verbose_name='Email')
+    email = models.EmailField(max_length=70, unique=True, verbose_name='Email')
     email_confirmed = models.BooleanField(default=False)
-    experience = models.PositiveSmallIntegerField(default=0,
-                                                  blank=True,
-                                                  verbose_name='Стаж')
+    experience = models.PositiveSmallIntegerField(default=0, blank=True, verbose_name='Стаж')
     job_place = models.ForeignKey('JobPlace',
-                                  on_delete=models.DO_NOTHING,
+                                  on_delete=models.SET_NULL,
                                   related_name='users',
                                   blank=True,
                                   null=True,
                                   verbose_name='Место работы')
     job_position = models.ForeignKey('JobPosition',
-                                     on_delete=models.DO_NOTHING,
+                                     on_delete=models.SET_NULL,
                                      related_name='users',
                                      blank=True,
                                      null=True,
                                      verbose_name='Должность')
 
-    def __str__(self) -> str:
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+        ordering = ['username']
+
+    def __str__(self):
         return f'Никнейм: {self.username}, email: {self.email}'
 
-    def get_full_name(self) -> str:
+    def get_full_name(self):
         return f'{self.last_name} {self.first_name} {self.patronymic}'.strip()
 
     def activate_user_accout_after_email_confirm(self) -> None:
@@ -60,35 +57,29 @@ class User(AbstractUser):
         group.user_set.add(self)
         group.save()
 
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-
 
 class JobPlace(models.Model):
-    name = models.CharField(max_length=150,
-                            unique=True,
-                            verbose_name='Наименование')
-
-    def __str__(self) -> str:
-        return self.name
+    name = models.CharField(max_length=150, unique=True, verbose_name='Наименование')
 
     class Meta:
         verbose_name = 'Место работы'
         verbose_name_plural = 'Места работы'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
 
 
 class JobPosition(models.Model):
-    name = models.CharField(max_length=150,
-                            unique=True,
-                            verbose_name='Должность')
-
-    def __str__(self) -> str:
-        return self.name
+    name = models.CharField(max_length=150, unique=True, verbose_name='Должность')
 
     class Meta:
         verbose_name = 'Должность'
         verbose_name_plural = 'Должности'
+        ordering = ['name']
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class AdditionalUserInfo(models.Model):
@@ -118,9 +109,9 @@ class AdditionalUserInfo(models.Model):
     about = models.TextField(max_length=500,
                              verbose_name='Обо мне')
 
-    def __str__(self) -> str:
-        return f'Город: {self.city}, телефон: {self.phone}'
-
     class Meta:
         verbose_name = 'Дополнительная информация о пользователе'
         verbose_name_plural = 'Дополнительная информация о пользователе'
+
+    def __str__(self):
+        return f'Город: {self.city}, телефон: {self.phone}'

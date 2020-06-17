@@ -7,7 +7,7 @@ phone_regex = RegexValidator(
 
 mail_index_regex = RegexValidator(
     regex=r'^\d{5,6}$',
-    message='Почтовый индекс должен быть в формате: 112233'
+    message='Почтовый индекс должен быть в формате: 123456'
 )
 
 only_chars = RegexValidator(
