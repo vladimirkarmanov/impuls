@@ -21,4 +21,4 @@ RUN apk del .build-deps
 
 WORKDIR $APP_HOME
 
-COPY ./src $APP_HOME
+COPY . $APP_HOME
