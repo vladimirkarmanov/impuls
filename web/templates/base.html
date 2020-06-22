@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,7 +30,10 @@
                 <a class="nav-link" href="#">Объявления</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Контакты</a>
+                <a class="nav-link disabled" href="#">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'chats:dialogs' %}">Диалоги {{ request.user.chat_set.unreaded.count }}</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -39,11 +42,11 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% if not request.user.is_authenticated %}
-                        <a class="dropdown-item" href={% url "listener_signup" %}>Зарегестрироваться</a>
-                        <a class="dropdown-item" href={% url "user_login" %}>Войти</a>
+                        <a class="dropdown-item" href="{% url 'register:listener_signup' %}">Зарегестрироваться</a>
+                        <a class="dropdown-item" href="{% url 'register:user_login' %}">Войти</a>
                     {% else %}
-                        <a href={% url "password_change" %}>Сменить пароль</a>
-                        <a class="dropdown-item" href={% url "user_logout" %}>Выйти</a>
+                        <a href="{% url 'register:password_change' %}">Сменить пароль</a>
+                        <a class="dropdown-item" href="{% url 'register:user_logout' %}">Выйти</a>
                     {% endif %}
                 </div>
             </li>

@@ -5,8 +5,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('register/', include('register.urls')),
-    path('events/', include('events.urls'))
+    path('register/', include(('register.urls', 'register'), namespace='register')),
+    path('events/', include(('events.urls', 'events'), namespace='events')),
+    path('chats/', include(('chats.urls', 'chats'), namespace='chats')),
 ]
 
 if bool(settings.DEBUG):

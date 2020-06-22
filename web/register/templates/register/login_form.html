@@ -11,7 +11,7 @@
                 <div class="col-4 mx-auto">
                     <h2 class="text-center">Вход</h2>
 
-                    <form class="d-flex flex-column" method="POST" action="{% url 'user_login' %}">
+                    <form class="d-flex flex-column" method="POST" action="{% url 'register:user_login' %}">
                         {% csrf_token %}
                         {% for field in form %}
                             {% include "register/includes/form_fields.html" %}
@@ -19,8 +19,8 @@
                         <button class="btn btn-primary align-self-center" type="submit">Войти</button>
                     </form>
 
-                    <p class="text-center">Нет аккаунта? <a href="{% url 'listener_signup' %}">Регистрация</a></p>
-                    <p class="text-center">Забыли пароль? <a href="{% url 'password_reset' %}">Сбросить</a></p>
+                    <p class="text-center">Нет аккаунта? <a href="{% url 'register:listener_signup' %}">Регистрация</a></p>
+                    <p class="text-center">Забыли пароль? <a href="{% url 'register:password_reset' %}">Сбросить</a></p>
                 </div>
             </div>
         </div>

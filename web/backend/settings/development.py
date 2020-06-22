@@ -14,7 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'register.apps.RegisterConfig',
     'events.apps.EventsConfig',
-    'documents.apps.DocumentsConfig'
+    'documents.apps.DocumentsConfig',
+    'chats.apps.ChatsConfig'
 ]
 
 MIDDLEWARE += [
