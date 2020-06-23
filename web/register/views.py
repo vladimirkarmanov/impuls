@@ -19,12 +19,12 @@ from django.views.generic import CreateView
 from .forms import (ListenerSignUpForm,
                     UserLoginForm,
                     AdditionalInfoForm)
-from .mixins import UserAlreadyAuthorizedMixin
+from .mixins import UserAlreadyAuthenticatedMixin
 from .models import User
 from .tokens import account_activation_token
 
 
-class ListenerSignupView(UserAlreadyAuthorizedMixin, CreateView):
+class ListenerSignupView(UserAlreadyAuthenticatedMixin, CreateView):
     form_class = ListenerSignUpForm
     template_name = 'register/signup_form.html'
     email_template_name = 'register/account_activation_email.html'
@@ -73,7 +73,7 @@ class AdditionalInfoView(LoginRequiredMixin, CreateView):
         return redirect(self.success_url)
 
 
-class UserLoginView(UserAlreadyAuthorizedMixin, LoginView):
+class UserLoginView(UserAlreadyAuthenticatedMixin, LoginView):
     authentication_form = UserLoginForm
     template_name = 'register/login_form.html'
 
@@ -82,23 +82,20 @@ class UserLogoutView(LogoutView):
     pass
 
 
-class UserPasswordResetView(UserAlreadyAuthorizedMixin, PasswordResetView):
+class UserPasswordResetView(UserAlreadyAuthenticatedMixin, PasswordResetView):
     template_name = 'register/password_reset/password_reset_form.html'
     email_template_name = 'register/password_reset/password_reset_email.html'
 
 
-class UserPasswordResetConfirmView(UserAlreadyAuthorizedMixin,
-                                   PasswordResetConfirmView):
+class UserPasswordResetConfirmView(UserAlreadyAuthenticatedMixin, PasswordResetConfirmView):
     template_name = 'register/password_reset/password_reset_confirm.html'
 
 
-class UserPasswordResetDoneView(UserAlreadyAuthorizedMixin,
-                                PasswordResetDoneView):
+class UserPasswordResetDoneView(UserAlreadyAuthenticatedMixin, PasswordResetDoneView):
     template_name = 'register/password_reset/password_reset_done.html'
 
 
-class UserPasswordResetCompleteView(UserAlreadyAuthorizedMixin,
-                                    PasswordResetCompleteView):
+class UserPasswordResetCompleteView(UserAlreadyAuthenticatedMixin, PasswordResetCompleteView):
     template_name = 'register/password_reset/password_reset_complete.html'
 
 

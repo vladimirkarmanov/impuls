@@ -9,11 +9,12 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=30, verbose_name='Фамилия', validators=[only_chars])
     patronymic = models.CharField(max_length=30,
                                   blank=True,
+                                  null=True,
                                   verbose_name='Отчество',
                                   validators=[only_chars])
     email = models.EmailField(max_length=70, unique=True, verbose_name='Email')
     email_confirmed = models.BooleanField(default=False)
-    experience = models.PositiveSmallIntegerField(default=0, blank=True, verbose_name='Стаж')
+    experience = models.PositiveSmallIntegerField(default=0, blank=True, null=True, verbose_name='Стаж')
     job_place = models.ForeignKey('JobPlace',
                                   on_delete=models.SET_NULL,
                                   related_name='users',
@@ -30,13 +31,16 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        ordering = ['username']
+        ordering = ['date_joined']
 
     def __str__(self):
         return f'Никнейм: {self.username}, email: {self.email}'
 
     def get_full_name(self):
-        return f'{self.last_name} {self.first_name} {self.patronymic}'.strip()
+        full_name = f'{self.last_name} {self.first_name} '
+        if self.patronymic:
+            full_name += self.patronymic
+        return full_name.strip()
 
     def activate_user_accout_after_email_confirm(self) -> None:
         self.is_active = True
