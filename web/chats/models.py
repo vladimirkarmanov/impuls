@@ -26,6 +26,9 @@ class Chat(models.Model):
         verbose_name_plural = 'Чаты'
         ordering = ['name']
 
+    def __str__(self):
+        return f'{self.id} {self.type} {self.name}'
+
     def get_absolute_url(self):
         return reverse('chats:messages', kwargs={'chat_id': self.pk})
 

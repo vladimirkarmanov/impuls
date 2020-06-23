@@ -1,20 +1,21 @@
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
-from .models import Chat, Message
-from .forms import MessageForm
 from register.models import User
+from chats.forms import MessageForm
+from chats.models import Chat
 
 
-class DialogsView(LoginRequiredMixin, View):
-    template = 'chats/dialogs.html'
+class ChatsView(LoginRequiredMixin, View):
+    template = 'chats/chats.html'
 
     def get(self, request):
-        chats = Chat.objects.filter(members__in=[request.user.id])
+        chats = Chat.objects \
+            .annotate(msg_count=Count('messages')) \
+            .filter(members__in=[request.user.id], msg_count__gt=0)
         return render(request,
                       self.template,
                       {'chats': chats})
@@ -51,7 +52,7 @@ class MessagesView(LoginRequiredMixin, View):
         return redirect(reverse('chats:messages', kwargs={'chat_id': chat_id}))
 
 
-class CreateDialogView(LoginRequiredMixin, View):
+class CreateChatView(LoginRequiredMixin, View):
     def get(self, request, user_id):
         user = User.objects.filter(id=user_id).first()
         if user == request.user:

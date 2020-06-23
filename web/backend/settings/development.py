@@ -12,10 +12,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'livereload',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_yasg',
     'register.apps.RegisterConfig',
     'events.apps.EventsConfig',
     'documents.apps.DocumentsConfig',
-    'chats.apps.ChatsConfig'
+    'chats.apps.ChatsConfig',
+    'api'
 ]
 
 MIDDLEWARE += [
