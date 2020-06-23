@@ -1,0 +1,98 @@
+[
+  {
+    "model": "register.user",
+    "pk": 1,
+    "fields": {
+      "password": "md5$ufELGgWtWYUC$07b58efa75f17458dbf562961a3f03ac",
+      "last_login": "2020-06-23T08:55:27.407Z",
+      "is_superuser": true,
+      "username": "vladimir",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2020-06-23T08:52:12.832Z",
+      "first_name": "",
+      "last_name": "",
+      "patronymic": null,
+      "email": "vladimir@mail.ru",
+      "email_confirmed": false,
+      "experience": 0,
+      "job_place": null,
+      "job_position": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "register.user",
+    "pk": 2,
+    "fields": {
+      "password": "md5$He2Pnu51sB7O$ac07cdb6ead5a81c19edff4472d3630a",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "ivan",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-06-23T08:58:01.265Z",
+      "first_name": "Иван",
+      "last_name": "Иванов",
+      "patronymic": null,
+      "email": "ivan@mail.ru",
+      "email_confirmed": true,
+      "experience": 5,
+      "job_place": null,
+      "job_position": null,
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "register.user",
+    "pk": 3,
+    "fields": {
+      "password": "!j1KhCyBe4bWA1CvVgSiUISQXtLEZw4wRMuh4ZWEO",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "stepan",
+      "is_staff": false,
+      "is_active": false,
+      "date_joined": "2020-06-23T09:09:12.185Z",
+      "first_name": "Степан",
+      "last_name": "Степанов",
+      "patronymic": "Степанович",
+      "email": "stepan@mail.ru",
+      "email_confirmed": false,
+      "experience": 10,
+      "job_place": null,
+      "job_position": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "register.user",
+    "pk": 4,
+    "fields": {
+      "password": "md5$ioJ6DW9Ao0sZ$46ed2902b68b83d44b7955dc324b9708",
+      "last_login": "2020-06-23T09:10:43.144Z",
+      "is_superuser": false,
+      "username": "artem",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-06-23T09:10:13.612Z",
+      "first_name": "Артем",
+      "last_name": "Дроздов",
+      "patronymic": "Владимирович",
+      "email": "artem@mail.ru",
+      "email_confirmed": true,
+      "experience": 10,
+      "job_place": null,
+      "job_position": null,
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+  }
+]
