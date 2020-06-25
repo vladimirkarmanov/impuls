@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from register.models import User
 
 
-class UserApiView(APIView):
+class UserAuthApiView(APIView):
     permission_classes = [AllowAny]
     username = openapi.Parameter('username', openapi.IN_QUERY,
                                  description="Username parameter.", type=openapi.TYPE_STRING)
