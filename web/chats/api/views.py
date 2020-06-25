@@ -4,7 +4,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND
 
 from chats.api.serializers import MessageSerializer
 from chats.models import Message, Chat
@@ -29,15 +29,15 @@ class MessageViewSet(viewsets.ModelViewSet):
         if chat_id := request.query_params.get('chat_id'):
             try:
                 chat = Chat.objects.get(id=chat_id)
-                messages = chat.messages.all()
-
                 if request.user in chat.members.all():
                     chat.messages.unreaded().exclude(author=request.user).update(is_readed=True)
-
-                serializer = MessageSerializer(messages, many=True)
-                self.paginate_queryset(messages)
-                return self.get_paginated_response(serializer.data)
+                    messages = chat.messages.all()
+                    serializer = MessageSerializer(messages, many=True)
+                    self.paginate_queryset(messages)
+                    return self.get_paginated_response(serializer.data)
+                else:
+                    return Response({'error': f'Not authorized'}, status=HTTP_403_FORBIDDEN)
             except Chat.DoesNotExist:
-                return Response({'error': f'Not found'}, status=HTTP_403_FORBIDDEN)
+                return Response({'error': f'Not found'}, status=HTTP_404_NOT_FOUND)
         else:
             return Response({'error': 'Please provide query param: chat_id'}, status=HTTP_400_BAD_REQUEST)
