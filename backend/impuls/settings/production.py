@@ -10,18 +10,6 @@ DEBUG = False
 SECRET_KEY = env.str('SECRET_KEY')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'register.apps.RegisterConfig',
-    'events.apps.EventsConfig',
-    'documents.apps.DocumentsConfig'
-]
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

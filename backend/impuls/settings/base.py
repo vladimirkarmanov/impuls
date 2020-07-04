@@ -2,7 +2,24 @@ import os
 
 BASE_DIR = os.path.normpath(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = 'impuls.urls'
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    'rest_framework',
+    'drf_yasg',
+
+    'register.apps.RegisterConfig',
+    'events.apps.EventsConfig',
+    'documents.apps.DocumentsConfig',
+    'chats.apps.ChatsConfig'
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -32,7 +49,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+WSGI_APPLICATION = 'impuls.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
