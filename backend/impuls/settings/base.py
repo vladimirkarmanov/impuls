@@ -12,9 +12,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',
-    'drf_yasg',
-
     'register.apps.RegisterConfig',
     'events.apps.EventsConfig',
     'documents.apps.DocumentsConfig',
@@ -93,31 +90,3 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Django rest framework
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_RENDERER_CLASSES': (
-        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
-        'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
-    ),
-    'DEFAULT_PARSER_CLASSES': (
-        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
-        'djangorestframework_camel_case.parser.MultiPartParser',
-    ),
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'DATETIME_FORMAT': '%d/%m/%Y %H:%M:%S',
-    'DATE_FORMAT': '%d/%m/%Y',
-    'TIME_FORMAT': '%H:%M %Z',
-    'TIME_INPUT_FORMATS': ['%H:%M %Z'],
-    'DATE_INPUT_FORMATS': ['%d/%m/%Y'],
-    'DATETIME_INPUT_FORMATS': ['%d/%m/%Y %H:%M:%S%z'],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100,
-}
