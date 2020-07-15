@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'api',
     'register.apps.RegisterConfig',
     'events.apps.EventsConfig',
     'documents.apps.DocumentsConfig',

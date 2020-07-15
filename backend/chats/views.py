@@ -13,9 +13,11 @@ class ChatsView(LoginRequiredMixin, View):
     template = 'chats/chats.html'
 
     def get(self, request):
+        # chats = Chat.objects \
+        #     .annotate(msg_count=Count('messages')) \
+        #     .filter(members__in=[request.user.id], msg_count__gt=0)
         chats = Chat.objects \
-            .annotate(msg_count=Count('messages')) \
-            .filter(members__in=[request.user.id], msg_count__gt=0)
+            .annotate(msg_count=Count('messages'))
         return render(request,
                       self.template,
                       {'chats': chats})
