@@ -2,7 +2,7 @@ import os
 
 BASE_DIR = os.path.normpath(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-ROOT_URLCONF = 'impuls.urls'
+ROOT_URLCONF = 'config.urls'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -47,7 +47,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'impuls.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
