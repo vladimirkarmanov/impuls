@@ -14,7 +14,7 @@ class TestListenerSignupView(RedirectAuthenticatedTestViewMixin,
                              BaseTestViewMixin):
     view = ListenerSignupView
     url = '/register/signup/'
-    url_name = 'listener_signup'
+    url_name = 'register:listener_signup'
     template_name = 'register/signup_form.html'
     email_template_name = 'register/account_activation_email.html'
     context = ['form']
@@ -38,7 +38,7 @@ class TestListenerSignupView(RedirectAuthenticatedTestViewMixin,
 @pytest.mark.django_db
 class TestAdditionalInfoView(LoginRequiredTestViewMixin, BaseTestViewMixin):
     url = '/register/signup/paper/'
-    url_name = 'additional_info'
+    url_name = 'register:additional_info'
     template_name = 'register/additional_info.html'
     context = ['form']
 
@@ -60,7 +60,7 @@ class TestAdditionalInfoView(LoginRequiredTestViewMixin, BaseTestViewMixin):
 @pytest.mark.django_db
 class TestUserLoginView(RedirectAuthenticatedTestViewMixin, BaseTestViewMixin):
     url = '/register/login/'
-    url_name = 'user_login'
+    url_name = 'register:user_login'
     template_name = 'register/login_form.html'
     context = ['form']
 
@@ -69,7 +69,7 @@ class TestUserLoginView(RedirectAuthenticatedTestViewMixin, BaseTestViewMixin):
 class TestUserLogoutView:
     client = Client()
     url = '/register/logout/'
-    url_name = 'user_logout'
+    url_name = 'register:user_logout'
     context = []
 
     @pytest.fixture(autouse=True)
@@ -95,7 +95,7 @@ class TestUserPasswordResetView(RedirectAuthenticatedTestViewMixin,
                                 BaseTestViewMixin):
     view = UserPasswordResetView
     url = '/register/password_reset/'
-    url_name = 'password_reset'
+    url_name = 'register:password_reset'
     template_name = 'register/password_reset/password_reset_form.html'
     email_template_name = 'register/password_reset/password_reset_email.html'
     context = ['form']
@@ -105,7 +105,7 @@ class TestUserPasswordResetView(RedirectAuthenticatedTestViewMixin,
 class TestUserPasswordResetDoneView(RedirectAuthenticatedTestViewMixin,
                                     BaseTestViewMixin):
     url = '/register/password_reset/done/'
-    url_name = 'password_reset_done'
+    url_name = 'register:password_reset_done'
     template_name = 'register/password_reset/password_reset_done.html'
     context = []
 
@@ -114,7 +114,7 @@ class TestUserPasswordResetDoneView(RedirectAuthenticatedTestViewMixin,
 class TestUserPasswordResetCompleteView(RedirectAuthenticatedTestViewMixin,
                                         BaseTestViewMixin):
     url = '/register/password_reset/complete/'
-    url_name = 'password_reset_complete'
+    url_name = 'register:password_reset_complete'
     template_name = 'register/password_reset/password_reset_complete.html'
     context = []
 
@@ -123,7 +123,7 @@ class TestUserPasswordResetCompleteView(RedirectAuthenticatedTestViewMixin,
 class TestUserPasswordChangeView(LoginRequiredTestViewMixin,
                                  BaseTestViewMixin):
     url = '/register/password_change/'
-    url_name = 'password_change'
+    url_name = 'register:password_change'
     template_name = 'register/password_change/password_change_form.html'
     context = ['form']
 
@@ -132,6 +132,6 @@ class TestUserPasswordChangeView(LoginRequiredTestViewMixin,
 class TestUserPasswordChangeDoneView(LoginRequiredTestViewMixin,
                                      BaseTestViewMixin):
     url = '/register/password_change/done/'
-    url_name = 'password_change_done'
+    url_name = 'register:password_change_done'
     template_name = 'register/password_change/password_change_done.html'
     context = []
