@@ -16,3 +16,4 @@ pylintrc
 package-lock.json
 db.sqlite3
 static
+logs

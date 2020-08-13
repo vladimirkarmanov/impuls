@@ -1,10 +1,13 @@
 import functools
+import logging
 import traceback
 
 from django.conf import settings
 from django.db import transaction
 from django.http import JsonResponse
 from django.views import View
+
+logger = logging.getLogger(__name__)
 
 JSON_DUMPS_PARAMS = {
     'ensure_ascii': False
@@ -23,10 +26,10 @@ def ret(json_object, status=200):
 
 def error_response(exception):
     """Returns formatted HTTP response error"""
-    r = {'errorMessage': str(exception)}
+    response = {'errorMessage': str(exception)}
     if settings.DEBUG:
-        r['traceback'] = traceback.format_exc()
-    return ret(r, status=400)
+        response['traceback'] = traceback.format_exc()
+    return ret(response, status=400)
 
 
 def base_view(func):
@@ -38,6 +41,7 @@ def base_view(func):
             with transaction.atomic():
                 return func(request, *args, **kwargs)
         except Exception as e:
+            logger.error(str(e))
             return error_response(e)
 
     return inner
@@ -51,6 +55,7 @@ class BaseView(View):
         try:
             response = super().dispatch(request, *args, **kwargs)
         except Exception as e:
+            logger.error(str(e))
             return self._response({'errorMessage': str(e)}, status=400)
 
         if isinstance(response, (dict, list)):
