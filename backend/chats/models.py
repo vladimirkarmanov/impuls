@@ -39,7 +39,7 @@ class Message(models.Model):
                                related_name='messages',
                                on_delete=models.CASCADE,
                                verbose_name='Пользователь')
-    message = models.TextField(verbose_name='Сообщение')
+    text = models.TextField(verbose_name='Сообщение')
     created_dt = models.DateTimeField(default=timezone.now, verbose_name='Дата сообщения')
     is_readed = models.BooleanField(default=False, verbose_name='Прочитано')
 
@@ -51,4 +51,4 @@ class Message(models.Model):
         ordering = ['created_dt']
 
     def __str__(self):
-        return self.message
+        return self.text

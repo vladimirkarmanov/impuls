@@ -11,7 +11,7 @@
 
 {% block content %}
     <section id="dialogs">
-        <div class="container mt-3">
+        <div class="container mt-5">
             <div class="messaging">
                 <div class="inbox_msg">
 
@@ -64,56 +64,7 @@
                         {% endif %}
                     </div>
                     <div class="mesgs">
-                        <div class="msg_history">
-                            <div class="incoming_msg">
-                                <div class="incoming_msg_img"><img
-                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
-                                        <p>Test which is a new approach to have all
-                                            solutions</p>
-                                        <span class="time_date"> 11:01 AM    |    June 9</span></div>
-                                </div>
-                            </div>
-                            <div class="outgoing_msg">
-                                <div class="sent_msg">
-                                    <p>Test which is a new approach to have all
-                                        solutions</p>
-                                    <span class="time_date"> 11:01 AM    |    June 9</span></div>
-                            </div>
-                            <div class="incoming_msg">
-                                <div class="incoming_msg_img"><img
-                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
-                                        <p>Test, which is a new approach to have</p>
-                                        <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-                                </div>
-                            </div>
-                            <div class="outgoing_msg">
-                                <div class="sent_msg">
-                                    <p>Apollo University, Delhi, India Test</p>
-                                    <span class="time_date"> 11:01 AM    |    Today</span></div>
-                            </div>
-                            <div class="incoming_msg">
-                                <div class="incoming_msg_img"><img
-                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
-                                        <p>We work directly with our designers and suppliers,
-                                            and sell direct to you, which means quality, exclusive
-                                            products, at a price anyone can afford.</p>
-                                        <span class="time_date"> 11:01 AM    |    Today</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="type_msg">
-                            <div class="input_msg_write">
-                                <input type="text" class="write_msg" placeholder="Type a message"/>
-                                <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
-                                                                              aria-hidden="true"></i></button>
-                            </div>
-                        </div>
+                        <p class="text-center text-muted" style="margin-top: 40%;">Выберите диалог или начните новый</p>
                     </div>
                 </div>
             </div>
@@ -131,7 +82,7 @@
     <script>
 		let searchInput = document.querySelector('.search-input');
 		let stylishInputGroup = document.querySelector('.stylish-input-group');
-		searchInput.addEventListener('input', function() {
+		searchInput.addEventListener('input', () => {
 			fetch('http://localhost:8000/api/users/', {
 				method: 'POST',
 				headers: {'Content-Type': 'application/json'},
@@ -152,7 +103,117 @@
 					}
 					stylishInputGroup.appendChild(usersBlock);
 				})
-				.catch(err => console.log(err))
+				.catch(err => console.log(err));
 		});
+
+		function createUserHeader() {
+			let headindSrch = document.createElement('div'),
+				recentHeading = document.createElement('div'),
+				companionName = document.createElement('h4'),
+				companionAvatar = document.createElement('img');
+
+			headindSrch.classList.add('headind_srch');
+			recentHeading.classList.add('recent_heading');
+			companionName.textContent = 'Артем Дроздов';
+			companionAvatar.src = 'https://ptetutorials.com/images/user-profile.png';
+			companionAvatar.style.width = '7%';
+			companionAvatar.style.float = 'right';
+
+			recentHeading.appendChild(companionName);
+			headindSrch.appendChild(recentHeading);
+			headindSrch.appendChild(companionAvatar);
+			return headindSrch;
+        }
+
+        function createMessageForm() {
+			let typeMsg = document.createElement('div'),
+				inputMsgWriteBlock = document.createElement('div'),
+				writeMsgInput = document.createElement('input'),
+				msgSendBtn = document.createElement('button'),
+				bntIcon = document.createElement('i');
+
+			typeMsg.classList.add('type_msg');
+			inputMsgWriteBlock.classList.add('input_msg_write_block');
+			writeMsgInput.classList.add('write_msg');
+			writeMsgInput.placeholder = 'Сообщение';
+			msgSendBtn.classList.add('msg_send_btn');
+			bntIcon.className = 'fa fa-paper-plane-o';
+			bntIcon.setAttribute('aria-hidden', 'true');
+
+			msgSendBtn.appendChild(bntIcon);
+			inputMsgWriteBlock.appendChild(writeMsgInput);
+			inputMsgWriteBlock.appendChild(msgSendBtn);
+			typeMsg.appendChild(inputMsgWriteBlock);
+			return typeMsg;
+        }
+
+		let chats = document.querySelectorAll('.chat_list'),
+			mesgs = document.querySelector('.mesgs');
+		chats.forEach(chat => {
+			chat.addEventListener('click', () => {
+				mesgs.innerHTML = '';
+
+				fetch(`http://localhost:8000/chats/${chat.id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let msgHistory = document.createElement('div');
+                        msgHistory.classList.add('msg_history');
+                        mesgs.appendChild(createUserHeader());
+                        mesgs.appendChild(msgHistory);
+
+                    	if (data.length === 0) {
+                    		let infoText = document.createElement('p');
+                    		infoText.textContent = 'У вас нет сообщений с этим пользователем';
+                            infoText.className = 'text-muted text-center';
+                            infoText.style.marginTop = '40%';
+                    		msgHistory.appendChild(infoText);
+                        } else {
+							data.forEach(message => {
+								if (message.author === '{{ request.user.username }}') {
+									let outgoingMsg = document.createElement('div'),
+										sentMsg = document.createElement('div'),
+										textMsg = document.createElement('p'),
+										timeMsg = document.createElement('span');
+									outgoingMsg.classList.add('outgoing_msg');
+									sentMsg.classList.add('sent_msg');
+									timeMsg.classList.add('time_date');
+
+									textMsg.textContent = message.text;
+									timeMsg.textContent = message.created_dt;
+
+									sentMsg.appendChild(textMsg);
+									sentMsg.appendChild(timeMsg);
+									outgoingMsg.appendChild(sentMsg);
+
+									msgHistory.appendChild(outgoingMsg);
+								} else {
+									let incomingMsg = document.createElement('div'),
+										receivedMsg = document.createElement('div'),
+										receivedWithdMsg = document.createElement('div'),
+										textMsg = document.createElement('p'),
+										timeMsg = document.createElement('span');
+									incomingMsg.classList.add('incoming_msg');
+									receivedMsg.classList.add('received_msg');
+									receivedWithdMsg.classList.add('received_withd_msg');
+									timeMsg.classList.add('time_date');
+
+									textMsg.textContent = message.text;
+									timeMsg.textContent = message.created_dt;
+
+									receivedWithdMsg.appendChild(textMsg);
+									receivedWithdMsg.appendChild(timeMsg);
+									receivedMsg.appendChild(receivedWithdMsg);
+									incomingMsg.appendChild(receivedMsg);
+
+									msgHistory.appendChild(incomingMsg);
+								}
+							});
+                        }
+
+						mesgs.appendChild(createMessageForm());
+                    })
+                    .catch(err => console.log(err));
+			});
+        });
     </script>
 {% endblock js %}

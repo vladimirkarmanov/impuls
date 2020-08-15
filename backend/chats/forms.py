@@ -6,10 +6,10 @@ from .models import Message
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ('message',)
-        labels = {'message': ''}
+        fields = ('text',)
+        labels = {'text': ''}
 
         widgets = {
-            'message': forms.Textarea(attrs={'class': 'form-control',
-                                             'style': 'resize: none;'})
+            'text': forms.TextInput(attrs={'class': 'write_msg',
+                                           'placeholder': 'Сообщение'})
         }

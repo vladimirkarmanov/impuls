@@ -121,11 +121,6 @@ img {
     margin: 16px 0 16px;
 }
 
-.incoming_msg_img {
-    display: inline-block;
-    width: 6%;
-}
-
 .received_msg {
     display: inline-block;
     padding: 0 0 0 10px;
@@ -156,7 +151,7 @@ img {
 
 .mesgs {
     float: left;
-    padding: 30px 15px 0 25px;
+    padding: 0 15px 0 25px;
     width: 60%;
 }
 
@@ -180,7 +175,7 @@ img {
     width: 46%;
 }
 
-.input_msg_write input {
+.input_msg_write_block input {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: medium none;
     color: #4c4c4c;

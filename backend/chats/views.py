@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -36,13 +37,14 @@ class MessagesView(LoginRequiredMixin, View):
         except Chat.DoesNotExist:
             chat = None
 
-        return render(
-            request,
-            self.template,
-            {'user_profile': request.user,
-             'chat': chat,
-             'form': MessageForm()}
-        )
+        data = []
+        for message in chat.messages.all():
+            data.append({
+                'author': message.author.username,
+                'text': message.text,
+                'created_dt': message.created_dt
+            })
+        return JsonResponse(data, safe=False)
 
     def post(self, request, chat_id):
         form = MessageForm(data=request.POST)
