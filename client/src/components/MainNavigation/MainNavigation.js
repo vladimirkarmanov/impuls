@@ -19,7 +19,9 @@ const MainNavigation = () => {
                         <LinkContainer to="/login">
                             <NavDropdown.Item>Вход</NavDropdown.Item>
                         </LinkContainer>
-                        <NavDropdown.Item>Регистрация</NavDropdown.Item>
+                        <LinkContainer to="/signup">
+                            <NavDropdown.Item>Регистрация</NavDropdown.Item>
+                        </LinkContainer>
                         <NavDropdown.Divider/>
                         <NavDropdown.Item>Выход</NavDropdown.Item>
                     </NavDropdown>

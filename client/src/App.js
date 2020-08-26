@@ -1,7 +1,8 @@
 import React from 'react'
 import MainNavigation from './components/MainNavigation/MainNavigation'
-import { Route, BrowserRouter, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Login from './components/Auth/Login/Login'
+import Signup from './components/Auth/Signup/Signup'
 
 function App() {
     return (
@@ -10,6 +11,9 @@ function App() {
             <Switch>
                 <Route path="/login">
                     <Login/>
+                </Route>
+                <Route path="/signup">
+                    <Signup/>
                 </Route>
             </Switch>
         </BrowserRouter>
