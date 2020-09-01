@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import (LoginView,
                                        LogoutView,
                                        PasswordResetView,
@@ -15,13 +16,28 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView
+from rest_framework import permissions
+from rest_framework import viewsets
 
 from .forms import (ListenerSignUpForm,
                     UserLoginForm,
                     AdditionalInfoForm)
 from .mixins import UserAlreadyAuthenticatedMixin
-from .models import User
+from .models import User, JobPlace, JobPosition
+from .serializers import JobPlaceSerializer, JobPositionSerializer
 from .tokens import account_activation_token
+
+
+class JobPlaceViewSet(viewsets.ModelViewSet):
+    queryset = JobPlace.objects.all()
+    serializer_class = JobPlaceSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class JobPositionViewSet(viewsets.ModelViewSet):
+    queryset = JobPosition.objects.all()
+    serializer_class = JobPositionSerializer
+    permission_classes = [permissions.AllowAny]
 
 
 class ListenerSignupView(UserAlreadyAuthenticatedMixin, CreateView):
