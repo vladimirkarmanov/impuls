@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Container, Form, NavLink, Row } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import AuthService from '../services/authService'
 
 const Signup = () => {
+    const [jobPlaces, setJobPlaces] = useState([])
+    const [jobPositions, setJobPositions] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const jobPlaces = await AuthService.fetchJobPlaces()
+            setJobPlaces(jobPlaces)
+            const jobPositions = await AuthService.fetchJobPositions()
+            setJobPositions(jobPositions)
+        }
+        fetchData()
+    }, [])
+
     return (
         <Container className="mt-5">
             <Row className="justify-content-center">
@@ -41,16 +55,18 @@ const Signup = () => {
                     <Form.Group controlId="jobPlace">
                         <Form.Label>Место работы</Form.Label>
                         <Form.Control as="select">
-                            <option>1</option>
-                            <option>2</option>
+                            {jobPlaces.map((jobPlace, index) => {
+                                return <option key={index}>{jobPlace.name}</option>
+                            })}
                         </Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId="jobPlace">
                         <Form.Label>Должность</Form.Label>
                         <Form.Control as="select">
-                            <option>1</option>
-                            <option>2</option>
+                            {jobPositions.map((jobPosition, index) => {
+                                return <option key={index}>{jobPosition.name}</option>
+                            })}
                         </Form.Control>
                     </Form.Group>
 

@@ -1,19 +1,20 @@
 import React from 'react'
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import AuthService from '../Auth/services/authService'
 
 const MainNavigation = () => {
     return (
         <Navbar bg="light" expand="lg">
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link>Администрирование</Nav.Link>
+                    {AuthService.isAuthenticated() && <Nav.Link>Администрирование</Nav.Link>}
                     <Nav.Link>Деятельность</Nav.Link>
                     <Nav.Link>Олимпиады</Nav.Link>
                     <Nav.Link>Обучение</Nav.Link>
                     <Nav.Link>Объявления</Nav.Link>
                     <Nav.Link>Контакты</Nav.Link>
-                    <Nav.Link>Диалоги</Nav.Link>
+                    {AuthService.isAuthenticated() && <Nav.Link>Диалоги</Nav.Link>}
 
                     <NavDropdown title="Аккаунт" id="basic-nav-dropdown">
                         <LinkContainer to="/login">
@@ -22,8 +23,17 @@ const MainNavigation = () => {
                         <LinkContainer to="/signup">
                             <NavDropdown.Item>Регистрация</NavDropdown.Item>
                         </LinkContainer>
-                        <NavDropdown.Divider/>
-                        <NavDropdown.Item>Выход</NavDropdown.Item>
+                        {AuthService.isAuthenticated() &&
+                        <>
+                            <LinkContainer to="/lk">
+                                <NavDropdown.Item>Личный кабинет</NavDropdown.Item>
+                            </LinkContainer>
+                            <NavDropdown.Divider/>
+                            <LinkContainer to="/logout" onClick={AuthService.logout}>
+                                <NavDropdown.Item>Выход</NavDropdown.Item>
+                            </LinkContainer>
+                        </>
+                        }
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
