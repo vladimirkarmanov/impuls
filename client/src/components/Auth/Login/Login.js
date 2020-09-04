@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Button, Container, Form, NavLink, Row } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import AuthService from '../services/authService'
 import PropTypes from 'prop-types'
+import { useStore } from '../../../stores/store'
 
 const Login = ({history}) => {
+    const {authStore} = useStore()
+
     const [state, setState] = useState({
         username: '',
         password: '',
@@ -18,8 +20,7 @@ const Login = ({history}) => {
     const handleLogin = async (event) => {
         event.preventDefault()
         const {username, password} = state
-
-        await AuthService.login(username, password)
+        await authStore.login(username, password)
         history.push('/')
     }
 

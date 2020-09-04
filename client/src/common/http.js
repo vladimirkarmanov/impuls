@@ -1,5 +1,5 @@
 import axios from 'axios'
-import AuthService  from '../components/Auth/services/authService'
+import AuthService  from '../services/Auth/AuthService'
 
 const http = axios.create({
     baseURL: '/api',

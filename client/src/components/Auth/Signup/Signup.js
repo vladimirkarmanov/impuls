@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Container, Form, NavLink, Row } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import AuthService from '../services/authService'
+import AuthService from '../../../services/Auth/AuthService'
 
 const Signup = () => {
     const [jobPlaces, setJobPlaces] = useState([])
     const [jobPositions, setJobPositions] = useState([])
-
     useEffect(() => {
         const fetchData = async () => {
             const jobPlaces = await AuthService.fetchJobPlaces()

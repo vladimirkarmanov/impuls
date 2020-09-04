@@ -4,13 +4,11 @@ import './index.scss'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { BrowserRouter } from 'react-router-dom'
-import store from './store/Store'
-
-export const StoreContext = React.createContext()
+import { rootStore, StoreContext } from './stores/store'
 
 ReactDOM.render(
     <React.StrictMode>
-        <StoreContext.Provider value={store}>
+        <StoreContext.Provider value={rootStore}>
             <BrowserRouter>
                 <App/>
             </BrowserRouter>
