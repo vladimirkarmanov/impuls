@@ -12,14 +12,12 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': env.str('DB_NAME'),
         'USER': env.str('DB_USER'),
         'PASSWORD': env.str('DB_PASSWORD'),
         'HOST': env.str('DB_HOST'),
-        'PORT': env.int('DB_PORT'),
-        'CHARSET': 'utf8',
-        'COLLATION': 'utf8_bin',
+        'PORT': env.int('DB_PORT')
     }
 }
 

@@ -1,4 +1,4 @@
-FROM python:3.8.3-alpine
+FROM python:3.8.5-alpine
 
 WORKDIR /home/app
 
@@ -7,11 +7,10 @@ ENV PYTHONUNBUFFERED 1
 ENV APP_HOME=/home/app/src
 
 RUN apk update \
-    && apk add --virtual .build-deps gcc g++ python3-dev musl-dev \
-    && apk add --no-cache mariadb-dev libpq zlib-dev jpeg-dev
+    && apk add --virtual .build-deps gcc g++ python3-dev \
+    && apk add --no-cache --update postgresql-dev libpq zlib-dev jpeg-dev
 
 RUN pip install --upgrade pip setuptools
-RUN pip install mysqlclient
 
 COPY ./requirements.txt ./
 

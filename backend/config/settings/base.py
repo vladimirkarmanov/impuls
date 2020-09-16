@@ -12,11 +12,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'api',
     'register.apps.RegisterConfig',
     'events.apps.EventsConfig',
-    'documents.apps.DocumentsConfig',
-    'chats.apps.ChatsConfig'
+    'documents.apps.DocumentsConfig'
 ]
 
 MIDDLEWARE = [
@@ -86,8 +84,7 @@ LOGOUT_REDIRECT_URL = '/register/login/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),
-    os.path.join(BASE_DIR, 'chats', 'staticfiles'),
+    os.path.join(BASE_DIR, 'staticfiles')
 ]
 
 MEDIA_URL = '/media/'
@@ -110,7 +107,7 @@ LOGGING = {
         'file': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(os.path.dirname(BASE_DIR), 'logs', 'backend.log'),
+            'filename': os.path.join(os.path.dirname(os.path.abspath(BASE_DIR)), 'logs', 'backend.log'),
             'formatter': 'fileformatter'
         }
     },

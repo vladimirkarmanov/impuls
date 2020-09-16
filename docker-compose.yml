@@ -1,17 +1,18 @@
 version: '3.5'
 
 services:
-  web:
-    container_name: web
+  backend:
+    container_name: backend
     restart: always
-    build: ./web
-    command: gunicorn backend.wsgi:application --bind :80 --preload --workers 3
+    build: ./backend
+    command: gunicorn config.wsgi:application --bind :80 --preload --workers 3
     volumes:
       - static_volume:/home/app/src/static
       - media_volume:/home/app/src/media
+      - logs:/home/app/logs
     expose:
       - 80
-    env_file: ./web/.env
+    env_file: ./backend/.env
     depends_on:
       - db
     links:
@@ -25,24 +26,24 @@ services:
       - media_volume:/home/app/src/media
     ports:
       - 80:80
-    env_file: ./web/.env
+    env_file: ./backend/.env
     depends_on:
-      - web
+      - backend
   db:
     container_name: db
     restart: always
-    image: mysql
-    ports:
-      - 3306
-    env_file: ./web/.env
+    image: postgres:12.0-alpine
+    env_file: ./backend/.env
     healthcheck:
-      test: ["CMD", "mysqladmin", "-u$MYSQL_USER", "-p$MYSQL_PASSWORD",  "ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     volumes:
-      - mysql_data:/var/lib/mysql
-
+      - postgres_data:/var/lib/postgresql/data/
 volumes:
-  mysql_data:
+  postgres_data:
   static_volume:
   media_volume:
+  logs:
