@@ -12,6 +12,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'djcelery',
+    'djcelery_email',
+
     'register.apps.RegisterConfig',
     'events.apps.EventsConfig',
     'documents.apps.DocumentsConfig'
@@ -123,3 +126,6 @@ LOGGING = {
         }
     }
 }
+
+# django-celery
+CELERY_BROKER_URL = 'amqp://guest:guest@0.0.0.0:5672/'

@@ -10,12 +10,12 @@ from django.contrib.auth.views import (LoginView,
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView
 
+from core.mailer import Mailer
 from .forms import (ListenerSignUpForm,
                     UserLoginForm,
                     AdditionalInfoForm)
@@ -33,15 +33,16 @@ class ListenerSignupView(UserAlreadyAuthenticatedMixin, CreateView):
         user = User.objects.create_user(**form.cleaned_data, is_active=False)
         user.set_unusable_password()
         current_site = get_current_site(self.request)
-        user.email_user(
-            'Активируйте свой аккаунт',
-            render_to_string(self.email_template_name, {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.id)),
-                'token': account_activation_token.make_token(user),
-            })
-        )
+        mailer = Mailer()
+        mailer.send_messages(subject='Активируйте свой аккаунт',
+                             template=self.email_template_name,
+                             context={
+                                 'user': user,
+                                 'domain': current_site.domain,
+                                 'uid': urlsafe_base64_encode(force_bytes(user.id)),
+                                 'token': account_activation_token.make_token(user),
+                             },
+                             to_emails=[user.email])
         return HttpResponse('Перейдите по ссылке из письма на вашем почтовом'
                             ' ящике, чтобы активировать свой аккаунт')
 

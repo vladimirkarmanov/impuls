@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.6'
 
 services:
   backend:
@@ -9,14 +9,16 @@ services:
     volumes:
       - static_volume:/home/app/src/static
       - media_volume:/home/app/src/media
-      - logs:/home/app/logs
+      - backend_logs:/home/app/logs/backend
     expose:
       - 80
     env_file: ./backend/.env
     depends_on:
       - db
+      - rabbitmq
     links:
       - db
+      - rabbitmq
   nginx:
     container_name: nginx
     restart: always
@@ -42,8 +44,24 @@ services:
       start_period: 10s
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq_etc:/etc/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_logs:/home/app/logs/rabbitmq
 volumes:
   postgres_data:
   static_volume:
   media_volume:
-  logs:
+  backend_logs:
+  rabbitmq_etc:
+  rabbitmq_data:
+  rabbitmq_logs:
