@@ -1,5 +1,6 @@
 from django.contrib.auth.models import Group
 
+from core.mailer import Mailer
 from register.models import User
 
 
@@ -11,8 +12,10 @@ class UserService:
         user.email_confirmed = True
         password = User.objects.make_random_password()
         user.set_password(password)
-        user.email_user(subject='Доступ к аккаунту',
-                        message=f'Ваш пароль: {password}')
+        mailer = Mailer()
+        mailer.send_messages(subject='Доступ к аккаунту',
+                             text=f'Ваш пароль: {password}',
+                             to_emails=[user.email])
         user.save()
 
     @staticmethod
