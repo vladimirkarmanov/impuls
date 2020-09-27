@@ -42,25 +42,6 @@ class User(AbstractUser):
             full_name += self.patronymic
         return full_name.strip()
 
-    def activate_user_accout_after_email_confirm(self) -> None:
-        self.is_active = True
-        self.email_confirmed = True
-        password = User.objects.make_random_password()
-        self.set_password(password)
-        self.email_user(subject='Доступ к аккаунту',
-                        message=f'Ваш пароль: {password}')
-        self.save()
-
-    def add_user_to_group_listeners(self) -> None:
-        group, created = Group.objects.get_or_create(name='Слушатели')
-        group.user_set.add(self)
-        group.save()
-
-    def add_user_to_group_teachers(self) -> None:
-        group, created = Group.objects.get_or_create(name='Преподаватели')
-        group.user_set.add(self)
-        group.save()
-
 
 class JobPlace(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Наименование')
@@ -82,7 +63,7 @@ class JobPosition(models.Model):
         verbose_name_plural = 'Должности'
         ordering = ['name']
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
 
 

@@ -21,6 +21,7 @@ from .forms import (ListenerSignUpForm,
                     AdditionalInfoForm)
 from .mixins import UserAlreadyAuthenticatedMixin
 from .models import User
+from .services.UserService import UserService
 from .tokens import account_activation_token
 
 
@@ -55,8 +56,8 @@ def activate_account(request, uidb64, token):
         user = None
 
     if user is not None and account_activation_token.check_token(user, token):
-        user.activate_user_accout_after_email_confirm()
-        user.add_user_to_group_listeners()
+        UserService.activate_user_accout_after_email_confirmation(user)
+        UserService.add_user_to_group_listeners(user)
         return render(request, 'register/success_activate_account.html')
     else:
         return HttpResponse('Срок действия этой ссылки истек!')

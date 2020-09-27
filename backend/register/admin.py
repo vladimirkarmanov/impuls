@@ -2,10 +2,10 @@ from typing import List
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import Group
 from django.db.models import QuerySet
 
 from .models import User, AdditionalUserInfo, JobPlace, JobPosition
+from .services.UserService import UserService
 
 
 @admin.register(JobPosition)
@@ -79,7 +79,7 @@ class CustomUserAdmin(UserAdmin):
 
     def save_model(self, request, obj, form, change) -> None:
         obj.save()
-        obj.add_user_to_group_teachers()
+        UserService.add_user_to_group_teachers(obj)
         super().save_model(request, obj, form, change)
 
     def get_queryset(self, request) -> QuerySet:
