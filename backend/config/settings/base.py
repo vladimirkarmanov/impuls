@@ -126,6 +126,3 @@ LOGGING = {
         }
     }
 }
-
-# django-celery
-CELERY_BROKER_URL = 'amqp://guest:guest@0.0.0.0:5672/'

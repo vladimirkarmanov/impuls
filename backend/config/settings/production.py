@@ -21,7 +21,10 @@ DATABASES = {
     }
 }
 
-EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+# django-celery
+CELERY_BROKER_URL = 'amqp://guest:guest@0.0.0.0:5672/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = env.str('EMAIL_HOST')
 EMAIL_PORT = env.int('EMAIL_PORT')
 EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
