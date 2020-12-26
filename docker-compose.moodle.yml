@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  mariadb:
+    image: 'bitnami/mariadb:10.2.34'
+    env_file: ./backend/.env
+    volumes:
+      - 'mariadb_data:/bitnami'
+    networks:
+      - moodle
+  moodle:
+    image: 'bitnami/moodle:3.9.2'
+    env_file: ./backend/.env
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+    volumes:
+      - 'moodle_data:/bitnami/moodle'
+    depends_on:
+      - mariadb
+    networks:
+      - moodle
+
+volumes:
+  mariadb_data:
+  moodle_data:
+
+networks:
+  moodle:

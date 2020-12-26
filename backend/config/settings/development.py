@@ -15,4 +15,9 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
 )
 
-EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Moodle
+MOODLE_HOST = 'http://localhost:8080'
+MOODLE_USERNAME = 'moadmin'
+MOODLE_PASSWORD = 'Fs$38fjskdffj'

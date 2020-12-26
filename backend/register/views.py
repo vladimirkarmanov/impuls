@@ -16,6 +16,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView
 
 from core.mailer import Mailer
+from core.moodle import Moodle
 from .forms import (ListenerSignUpForm,
                     UserLoginForm,
                     AdditionalInfoForm)
@@ -44,8 +45,15 @@ class ListenerSignupView(UserAlreadyAuthenticatedMixin, CreateView):
                                  'token': account_activation_token.make_token(user),
                              },
                              to_emails=[user.email])
-        return HttpResponse('Перейдите по ссылке из письма на вашем почтовом'
-                            ' ящике, чтобы активировать свой аккаунт')
+        moodle = Moodle()
+        moodle.signup_user({
+            'firstname': user.first_name,
+            'lastname': user.last_name,
+            'email': user.email,
+            'username': user.username,
+            'password': user.password
+        })
+        return HttpResponse('Перейдите по ссылке из письма на вашем почтовом ящике, чтобы активировать свой аккаунт')
 
 
 def activate_account(request, uidb64, token):
