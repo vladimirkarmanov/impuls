@@ -6,3 +6,5 @@ django-environ==0.4.5
 psycopg2-binary
 gunicorn
 Pillow
+pandas==1.2.0
+sklearn==0.0

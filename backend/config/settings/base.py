@@ -17,7 +17,8 @@ INSTALLED_APPS = [
 
     'register.apps.RegisterConfig',
     'events.apps.EventsConfig',
-    'documents.apps.DocumentsConfig'
+    'documents.apps.DocumentsConfig',
+    'atp.apps.AtpConfig',
 ]
 
 MIDDLEWARE = [
