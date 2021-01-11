@@ -139,7 +139,7 @@
 			card.appendChild(cardHeader);
 			card.appendChild(cardBody);
         	for (let j = 0; j < content[`${i}`].length; j++) {
-        		cardHeader.textContent = `Группа ${i}`;
+        		cardHeader.textContent = `${content[`${i}`][j].groupName}`;
 				let cardText = document.createElement('div');
 				cardText.setAttribute('class', 'card-text');
 				cardText.textContent = `${content[`${i}`][j].name} | ${content[`${i}`][j].academicDegree} | ${content[`${i}`][j].academicRank} | ${content[`${i}`][j].basicLevel} | ${content[`${i}`][j].basicQualification}`;

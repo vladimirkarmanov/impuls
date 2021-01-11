@@ -34,18 +34,34 @@ class ClusterAnalysis:
         dataset = self._get_dataset(data)
         X = dataset.iloc[:, [1, 2, 3, 4]].values
 
-        wcss = self._calculate_wcss(X)
-        n_clusters = self._optimal_number_of_clusters(wcss)
+        n_clusters = 5
         kmeans = KMeans(n_clusters=n_clusters, init='k-means++', random_state=42)
         y_kmeans = kmeans.fit_predict(X)
         clusters = {c + 1: [] for c in range(max(y_kmeans) + 1)}
         for i in range(len(dataset)):
+            name = str(dataset.iloc[i][0])
+            academic_degree = int(dataset.iloc[i][1])
+            academic_rank = int(dataset.iloc[i][2])
+            basic_level = int(dataset.iloc[i][3])
+            basic_qualification = int(dataset.iloc[i][4])
+            group_name = 'группа'
+            if basic_level in [9, 10] and basic_qualification >= 13:
+                group_name = 'Высоко-квалифицированные'
+            elif basic_level in [3, 4, 5] and basic_qualification >= 9:
+                group_name = 'Средне-квалифицированные'
+            elif basic_level == 10:
+                group_name = 'Высокий уровень знаний'
+            elif basic_level in [1, 2] and basic_qualification <= 8:
+                group_name = 'Низкий уровень знаний'
+            elif basic_level in [6, 7, 8] and basic_qualification >= 11:
+                group_name = 'Выше среднего уровень знаний'
             student = {
-                'name': str(dataset.iloc[i][0]),
-                'academicDegree': int(dataset.iloc[i][1]),
-                'academicRank': int(dataset.iloc[i][2]),
-                'basicLevel': int(dataset.iloc[i][3]),
-                'basicQualification': int(dataset.iloc[i][4])
+                'groupName': group_name,
+                'name': name,
+                'academicDegree': academic_degree,
+                'academicRank': academic_rank,
+                'basicLevel': basic_level,
+                'basicQualification': basic_qualification
             }
             clusters[y_kmeans[i] + 1].append(student)
 
