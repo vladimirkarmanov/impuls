@@ -16,8 +16,7 @@ INSTALLED_APPS = [
     'djcelery_email',
 
     'register.apps.RegisterConfig',
-    'events.apps.EventsConfig',
-    'documents.apps.DocumentsConfig'
+    'courses.apps.CoursesConfig'
 ]
 
 MIDDLEWARE = [

@@ -8,8 +8,9 @@ from config.views import index
 urlpatterns = [
     path('', index, name='index'),
     path('admin/', admin.site.urls),
+
     path('register/', include(('register.urls', 'register'), namespace='register')),
-    path('events/', include(('events.urls', 'events'), namespace='events'))
+    path('courses/', include(('courses.urls', 'courses'), namespace='courses')),
 ]
 
 if bool(settings.DEBUG):

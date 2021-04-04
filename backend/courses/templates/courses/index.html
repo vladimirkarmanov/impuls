@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Курсы
+{% endblock %}
+
+{% block style %}
+    <style>
+        #courses-nav > .nav-item {
+            margin-right: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="card text-center mt-2">
+                <div class="card-header">
+                    <ul id="courses-nav" class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-secondary" aria-current="true" href="#">Список курсов</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-secondary" href="{% url 'courses:training' %}">Повышение квалификации</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Вы находитесь в разделе "Курсы"</h5>
+                    <p class="card-text">Перейдите в один из пунктов меню</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
