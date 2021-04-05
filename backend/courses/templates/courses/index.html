@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block page_title %}
     Курсы
@@ -19,10 +20,16 @@
                 <div class="card-header">
                     <ul id="courses-nav" class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a class="btn btn-outline-secondary" aria-current="true" href="#">Список курсов</a>
+                            <a id="courses-list" class="btn btn-outline-secondary" aria-current="true" href="#">
+                                <img src="{% static 'img/buttons/list.png' %}" alt="">
+                                Список курсов
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-secondary" href="{% url 'courses:training' %}">Повышение квалификации</a>
+                            <a id="training" class="btn btn-outline-secondary" href="{% url 'courses:training' %}">
+                                <img src="{% static 'img/buttons/training.png' %}" alt="">
+                                Повышение квалификации
+                            </a>
                         </li>
                     </ul>
                 </div>

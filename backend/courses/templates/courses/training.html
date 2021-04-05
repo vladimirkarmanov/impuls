@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block page_title %}
     Повышение квалификации
@@ -19,10 +20,16 @@
                 <div class="card-header">
                     <ul id="training-nav" class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a class="btn btn-outline-secondary" aria-current="true" href="{% url 'courses:choice' %}">Выбор сотрудников для повышения квалификации</a>
+                            <a class="btn btn-outline-secondary" aria-current="true" href="{% url 'courses:choice' %}">
+                                <img src="{% static 'img/buttons/choices.png' %}" alt="">
+                                Выбор сотрудников для повышения квалификации
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-secondary" href="#">Анализ данных повышения квалификации</a>
+                            <a class="btn btn-outline-secondary" href="#">
+                                <img src="{% static 'img/buttons/analysis.png' %}" alt="">
+                                Анализ данных повышения квалификации
+                            </a>
                         </li>
                     </ul>
                 </div>
