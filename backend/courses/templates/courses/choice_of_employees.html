@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block page_title %}
     Выбор сотрудников для повышения квалификации
@@ -16,6 +17,16 @@
     <div class="container">
         <div class="row">
             <div class="card text-center mt-2">
+                <div class="card-header">
+                    <ul id="training-nav" class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-secondary" aria-current="true" href="{% url 'courses:training' %}">
+                                <img src="{% static 'img/buttons/goback.png' %}" alt="">
+                                Назад
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">Выбор сотрудников для повышения квалификации</h5>
                     <table class="table table-striped">
