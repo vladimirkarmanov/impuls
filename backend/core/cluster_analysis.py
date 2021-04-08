@@ -47,14 +47,14 @@ class ClusterAnalysis:
             group_name = 'Требуется повышение квалификации'
             if basic_qualification >= 13 and time_without_training < 40:
                 group_name = 'Высоко-квалифицированные'
-            elif basic_qualification >= 9 and time_without_training < 60:
+            elif basic_qualification >= 11 and 20 <= time_without_training <= 30:
+                group_name = 'Выше среднего уровень знаний'
+            elif basic_qualification >= 9 and 30 <= time_without_training <= 40:
                 group_name = 'Средне-квалифицированные'
             elif time_without_training == 10 and time_without_training < 60:
                 group_name = 'Высокий уровень знаний'
             elif basic_qualification <= 8 and time_without_training > 60:
                 group_name = 'Низкий уровень знаний'
-            elif basic_qualification >= 11 and time_without_training < 50:
-                group_name = 'Выше среднего уровень знаний'
             student = {
                 'groupName': group_name,
                 'name': name,
