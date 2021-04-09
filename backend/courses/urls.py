@@ -1,6 +1,6 @@
 from django.urls import path
 
-from courses.views import CoursesList, index, Training, ChoiceOfEmployees, Analysis, analysis_process
+from .views import CoursesList, index, Training, ChoiceOfEmployees, Analysis, analysis_process
 
 urlpatterns = [
     path('', index, name='index'),

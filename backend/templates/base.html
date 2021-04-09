@@ -22,24 +22,42 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'courses:index' %}">Курсы</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'courses:index' %}">
+                        <img src="{% static 'img/buttons/courses.png' %}" alt="">
+                        Курсы
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Обучающиеся</a>
+                    <a class="nav-link" href="#">
+                        <img src="{% static 'img/buttons/student.png' %}" alt="">
+                        Обучающиеся
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/">Ведение базы данных</a>
+                    <a class="nav-link" href="/admin/">
+                        <img src="{% static 'img/buttons/db.png' %}" alt="">
+                        Ведение БД
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Отчет</a>
+                    <a class="nav-link" href="{% url 'report:index' %}">
+                        <img src="{% static 'img/buttons/report.png' %}" alt="">
+                        Отчет
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Помощь</a>
+                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">
+                        <img src="{% static 'img/buttons/help.png' %}" alt="">
+                        Помощь
+                    </a>
                 </li>
             </ul>
             <div class="d-flex">
                 <p>Роль: <strong>Admin</strong></p>
-                <a class="dropdown-item" href="#">Выход</a>
+                <a class="dropdown-item" href="#">
+                    <img src="{% static 'img/buttons/exit.png' %}" alt="">
+                    Выход
+                </a>
             </div>
         </div>
     </div>
