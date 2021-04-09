@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('register/', include(('register.urls', 'register'), namespace='register')),
     path('courses/', include(('courses.urls', 'courses'), namespace='courses')),
+    path('report/', include(('report.urls', 'report'), namespace='report')),
 ]
 
 if bool(settings.DEBUG):

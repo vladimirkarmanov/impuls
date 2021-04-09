@@ -2,10 +2,13 @@ from typing import List
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 from django.db.models import QuerySet
 
-from .models import User, AdditionalUserInfo, JobPlace, JobPosition
+from .models import User, AdditionalUserInfo, JobPosition, EducationalOrganization, EducationalDocument
 from .services.UserService import UserService
+
+admin.site.unregister(Group)
 
 
 @admin.register(JobPosition)
@@ -18,14 +21,14 @@ class JobPositionAdmin(admin.ModelAdmin):
         model = JobPosition
 
 
-@admin.register(JobPlace)
-class JobPlaceAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    list_display_links = ('name',)
-    search_fields = ('name',)
-
-    class Meta:
-        model = JobPlace
+# @admin.register(JobPlace)
+# class JobPlaceAdmin(admin.ModelAdmin):
+#     list_display = ('name',)
+#     list_display_links = ('name',)
+#     search_fields = ('name',)
+#
+#     class Meta:
+#         model = JobPlace
 
 
 class AdditionalUserInfoInline(admin.StackedInline):
@@ -90,3 +93,23 @@ class CustomUserAdmin(UserAdmin):
 
     class Meta:
         model = User
+
+
+@admin.register(EducationalOrganization)
+class EducationalOrganizationAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    list_display_links = ('name',)
+    search_fields = ('name',)
+
+    class Meta:
+        model = EducationalOrganization
+
+
+@admin.register(EducationalDocument)
+class EducationalDocumentAdmin(admin.ModelAdmin):
+    list_display = ('number',)
+    list_display_links = ('number',)
+    search_fields = ('number',)
+
+    class Meta:
+        model = EducationalDocument

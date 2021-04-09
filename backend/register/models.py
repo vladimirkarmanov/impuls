@@ -44,7 +44,7 @@ class User(AbstractUser):
 
 
 class JobPlace(models.Model):
-    name = models.CharField(max_length=150, unique=True, verbose_name='Наименование')
+    name = models.CharField(max_length=150, unique=True, verbose_name='Название')
 
     class Meta:
         verbose_name = 'Место работы'
@@ -100,3 +100,29 @@ class AdditionalUserInfo(models.Model):
 
     def __str__(self):
         return f'Город: {self.city}, телефон: {self.phone}'
+
+
+class EducationalOrganization(models.Model):
+    name = models.CharField(max_length=150, unique=True, verbose_name='Название')
+    short_name = models.CharField(max_length=50, verbose_name='Краткое название')
+
+    class Meta:
+        verbose_name = 'Образовательная организация'
+        verbose_name_plural = 'Образовательные организации'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
+class EducationalDocument(models.Model):
+    number = models.IntegerField(verbose_name='Номер')
+    date = models.DateField(verbose_name='Дата выдачи')
+
+    class Meta:
+        verbose_name = 'Документ об образовании'
+        verbose_name_plural = 'Документы об образовании'
+        ordering = ['number']
+
+    def __str__(self):
+        return self.number

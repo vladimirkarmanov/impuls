@@ -12,11 +12,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'djcelery',
-    'djcelery_email',
+    # 'djcelery',
+    # 'djcelery_email',
 
     'register.apps.RegisterConfig',
-    'courses.apps.CoursesConfig'
+    'courses.apps.CoursesConfig',
+    'report.apps.ReportConfig',
 ]
 
 MIDDLEWARE = [

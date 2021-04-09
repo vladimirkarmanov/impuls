@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Отчет
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="card text-center mt-2">
+                <div class="card-body">
+                    <h5 class="card-title">Отчет о повышении квалификации</h5>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Название курса</th>
+                            <th scope="col">Обучающийся</th>
+                            <th scope="col">Номер документа о повышении квалификации</th>
+                            <th scope="col">Дата выдачи</th>
+                            <th scope="col">Количество часов</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Изучение C#</td>
+                            <td>Иванов И.А.</td>
+                            <td>328121</td>
+                            <td>12.02.2020</td>
+                            <td>70</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Изучение Java</td>
+                            <td>Троян В.А.</td>
+                            <td>325445</td>
+                            <td>15.12.2020</td>
+                            <td>80</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>История России 19 века</td>
+                            <td>Дубок П.И.</td>
+                            <td>255312</td>
+                            <td>13.02.2020</td>
+                            <td>45</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
