@@ -1,109 +1,18 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (LoginView,
-                                       LogoutView,
-                                       PasswordResetView,
-                                       PasswordResetDoneView,
-                                       PasswordResetConfirmView,
-                                       PasswordResetCompleteView,
-                                       PasswordChangeView,
-                                       PasswordChangeDoneView)
-from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
-from django.utils.encoding import force_bytes
-from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.views.generic import CreateView
+                                       LogoutView)
+from django.utils.decorators import method_decorator
 
-from core.mailer import Mailer
-from .forms import (ListenerSignUpForm,
-                    UserLoginForm,
-                    AdditionalInfoForm)
+from core.decorators import login_not_required
+from .forms import (UserLoginForm)
 from .mixins import UserAlreadyAuthenticatedMixin
-from .models import User
-from .services.UserService import UserService
-from .tokens import account_activation_token
 
 
-class ListenerSignupView(UserAlreadyAuthenticatedMixin, CreateView):
-    form_class = ListenerSignUpForm
-    template_name = 'register/signup_form.html'
-    email_template_name = 'register/account_activation_email.html'
-
-    def form_valid(self, form):
-        user = User.objects.create_user(**form.cleaned_data, is_active=False)
-        user.set_unusable_password()
-        current_site = get_current_site(self.request)
-        mailer = Mailer()
-        mailer.send_messages(subject='Активируйте свой аккаунт',
-                             template=self.email_template_name,
-                             context={
-                                 'user': user,
-                                 'domain': current_site.domain,
-                                 'uid': urlsafe_base64_encode(force_bytes(user.id)),
-                                 'token': account_activation_token.make_token(user),
-                             },
-                             to_emails=[user.email])
-        return HttpResponse('Перейдите по ссылке из письма на вашем почтовом'
-                            ' ящике, чтобы активировать свой аккаунт')
-
-
-def activate_account(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(id=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        UserService.activate_user_accout_after_email_confirmation(user)
-        UserService.add_user_to_group_listeners(user)
-        return render(request, 'register/success_activate_account.html')
-    else:
-        return HttpResponse('Срок действия этой ссылки истек!')
-
-
-class AdditionalInfoView(LoginRequiredMixin, CreateView):
-    form_class = AdditionalInfoForm
-    template_name = 'register/additional_info.html'
-    success_url = '/'
-
-    def form_valid(self, form):
-        additional_info = form.save(commit=False)
-        additional_info.user = self.request.user
-        additional_info.save()
-        return redirect(self.success_url)
-
-
+@method_decorator(login_not_required, name='dispatch')
 class UserLoginView(UserAlreadyAuthenticatedMixin, LoginView):
     authentication_form = UserLoginForm
     template_name = 'register/login_form.html'
 
 
+@method_decorator(login_not_required, name='dispatch')
 class UserLogoutView(LogoutView):
     pass
-
-
-class UserPasswordResetView(UserAlreadyAuthenticatedMixin, PasswordResetView):
-    template_name = 'register/password_reset/password_reset_form.html'
-    email_template_name = 'register/password_reset/password_reset_email.html'
-
-
-class UserPasswordResetConfirmView(UserAlreadyAuthenticatedMixin, PasswordResetConfirmView):
-    template_name = 'register/password_reset/password_reset_confirm.html'
-
-
-class UserPasswordResetDoneView(UserAlreadyAuthenticatedMixin, PasswordResetDoneView):
-    template_name = 'register/password_reset/password_reset_done.html'
-
-
-class UserPasswordResetCompleteView(UserAlreadyAuthenticatedMixin, PasswordResetCompleteView):
-    template_name = 'register/password_reset/password_reset_complete.html'
-
-
-class UserPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
-    template_name = 'register/password_change/password_change_form.html'
-
-
-class UserPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
-    template_name = 'register/password_change/password_change_done.html'

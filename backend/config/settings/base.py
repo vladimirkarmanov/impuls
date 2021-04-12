@@ -12,9 +12,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 'djcelery',
-    # 'djcelery_email',
-
     'register.apps.RegisterConfig',
     'courses.apps.CoursesConfig',
     'report.apps.ReportConfig',
@@ -26,9 +23,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'core.middlewares.LoginRequiredMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'core.middlewares.BaseExceptionHandlerMiddleware'
+    'core.middlewares.BaseExceptionHandlerMiddleware',
 ]
 
 TEMPLATES = [

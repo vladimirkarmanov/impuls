@@ -1,7 +1,0 @@
-{% autoescape off %}
-    Здравствуйте, {{ user.get_full_name }},
-
-    Пожалуйста, перейдите по ссылке ниже, чтобы подтвердить свой email:
-
-    http://{{ domain }}{% url 'register:activate_account' uidb64=uid token=token %}
-{% endautoescape %}
