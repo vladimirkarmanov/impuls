@@ -1,9 +1,19 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import JobPosition, EducationalOrganization, EducationalDocument
+from .models import JobPosition, EducationalOrganization, EducationalDocument, User
 
 admin.site.unregister(Group)
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username',)
+    list_display_links = ('username',)
+    search_fields = ('username',)
+
+    class Meta:
+        model = User
 
 
 @admin.register(JobPosition)
