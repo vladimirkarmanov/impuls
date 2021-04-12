@@ -10,7 +10,7 @@ mail_index_regex = RegexValidator(
     message='Почтовый индекс должен быть в формате: 123456'
 )
 
-only_chars = RegexValidator(
+only_russian_chars = RegexValidator(
     regex=r'[а-яё]|[А-ЯЁ]',
-    message='Это поле может содержать только заглавные и строчные буквы'
+    message='Это поле может содержать только русские буквы'
 )
