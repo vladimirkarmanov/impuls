@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 
-from .validators import only_russian_chars
+from core.validators import only_russian_chars
 
 
 class User(AbstractUser):
@@ -62,7 +62,7 @@ class EducationalOrganization(models.Model):
 
 
 class EducationalDocument(models.Model):
-    number = models.IntegerField(verbose_name='Номер')
+    number = models.PositiveIntegerField(verbose_name='Номер')
     date = models.DateField(verbose_name='Дата выдачи')
 
     class Meta:

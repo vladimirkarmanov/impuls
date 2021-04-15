@@ -14,3 +14,8 @@ only_russian_chars = RegexValidator(
     regex=r'[а-яё]|[А-ЯЁ]',
     message='Это поле может содержать только русские буквы'
 )
+
+only_numbers = RegexValidator(
+    regex=r'^\d{0,9}$',
+    message='Это поле должно содержать только цифры'
+)
