@@ -13,7 +13,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'register.apps.RegisterConfig',
-    'courses.apps.CoursesConfig',
+    'qualification.apps.QualificationConfig',
     'report.apps.ReportConfig',
 ]
 
@@ -76,7 +76,6 @@ USE_L10N = True
 USE_TZ = True
 
 # Auth
-AUTH_USER_MODEL = 'register.User'
 LOGIN_URL = '/register/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/register/login/'
@@ -92,6 +91,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Logging
+os.makedirs(os.path.join(os.path.dirname(os.path.abspath(BASE_DIR)), 'logs'), exist_ok=True)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

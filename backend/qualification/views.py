@@ -12,7 +12,7 @@ from core.cluster_analysis import ClusterAnalysis
 
 
 def index(request):
-    return render(request, 'courses/index.html')
+    return render(request, 'qualification/index.html')
 
 
 class CoursesList(ListView):
@@ -20,15 +20,15 @@ class CoursesList(ListView):
 
 
 class Training(TemplateView):
-    template_name = 'courses/training.html'
+    template_name = 'qualification/training.html'
 
 
 class ChoiceOfEmployees(TemplateView):
-    template_name = 'courses/choice_of_employees.html'
+    template_name = 'qualification/choice_of_employees.html'
 
 
 class Analysis(TemplateView):
-    template_name = 'courses/analysis.html'
+    template_name = 'qualification/analysis.html'
 
     def post(self, request):
         context = {}

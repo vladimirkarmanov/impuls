@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('register/', include(('register.urls', 'register'), namespace='register')),
-    path('courses/', include(('courses.urls', 'courses'), namespace='courses')),
+    path('qualification/', include(('qualification.urls', 'qualification'), namespace='qualification')),
     path('report/', include(('report.urls', 'report'), namespace='report')),
 ]
 
