@@ -5,7 +5,7 @@ import pandas
 from sklearn.cluster import KMeans
 
 
-class ClusterAnalysis:
+class ClusterAnalysisService:
     def _calculate_wcss(self, data, max_clusters_count=10):
         wcss = []
         for i in range(1, max_clusters_count + 1):
@@ -32,36 +32,38 @@ class ClusterAnalysis:
 
     def cluster_analysis(self, data) -> dict:
         dataset = self._get_dataset(data)
-        X = dataset.iloc[:, [1, 2, 3, 4]].values
+        x = dataset.iloc[:, [1, 2, 3, 4]].values
 
         n_clusters = 5
         kmeans = KMeans(n_clusters=n_clusters, init='k-means++', random_state=42)
-        y_kmeans = kmeans.fit_predict(X)
+        y_kmeans = kmeans.fit_predict(x)
         clusters = {c + 1: [] for c in range(max(y_kmeans) + 1)}
         for i in range(len(dataset)):
             name = str(dataset.iloc[i][0])
             academic_degree = int(dataset.iloc[i][1])
             academic_rank = int(dataset.iloc[i][2])
-            basic_qualification = int(dataset.iloc[i][3])
-            time_without_training = int(dataset.iloc[i][4])
-            group_name = 'Требуется повышение квалификации'
-            if basic_qualification >= 13 and time_without_training < 40:
-                group_name = 'Высоко-квалифицированные'
-            elif basic_qualification >= 11 and 20 <= time_without_training <= 30:
-                group_name = 'Выше среднего уровень знаний'
-            elif basic_qualification >= 9 and 30 <= time_without_training <= 40:
-                group_name = 'Средне-квалифицированные'
-            elif time_without_training == 10 and time_without_training < 60:
-                group_name = 'Высокий уровень знаний'
-            elif basic_qualification <= 8 and time_without_training > 60:
-                group_name = 'Низкий уровень знаний'
+            qualification_category = int(dataset.iloc[i][3])
+            months_without_training = int(dataset.iloc[i][4])
+            group_name = ''
+            if months_without_training >= 60:
+                group_name = 'Требуется повышение квалификации'
+            elif months_without_training >= 50:
+                group_name = 'Низко квалифицированные'
+            elif months_without_training >= 25:
+                group_name = 'Средне квалифицированные'
+            elif months_without_training >= 10 and qualification_category == 0:
+                group_name = 'Средне квалифицированные'
+            elif months_without_training >= 10 and qualification_category == 1:
+                group_name = 'Высоко квалифицированные'
+            elif months_without_training >= 0:
+                group_name = 'Высоко квалифицированные'
             student = {
                 'groupName': group_name,
                 'name': name,
                 'academicDegree': academic_degree,
                 'academicRank': academic_rank,
-                'basicQualification': basic_qualification,
-                'timeWithoutTraining': time_without_training
+                'qualificationCategory': qualification_category,
+                'monthsWithoutTraining': months_without_training
             }
             clusters[y_kmeans[i] + 1].append(student)
 

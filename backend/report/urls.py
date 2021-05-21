@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import index
+from .views import IndexView, analysis_process
 
 urlpatterns = [
-    path('', index, name='index')
+    path('', IndexView.as_view(), name='index'),
+    path('analysis/', analysis_process, name='analysis_process'),
 ]
