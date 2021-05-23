@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Обучающиеся
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="card text-center mt-2">
+                <div class="card-body">
+                    <h5 class="card-title">Список обучающихся</h5>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">ФИО</th>
+                            <th scope="col">Стаж</th>
+                            <th scope="col">Ученое звание</th>
+                            <th scope="col">Ученая степень</th>
+                            <th scope="col">Квалификационная категория</th>
+                            <th scope="col">Должность</th>
+                            <th scope="col">Образовательная организация</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for student in students %}
+                            <tr>
+                                <td>{{ student.physical_face.get_full_name }}</td>
+                                <td>{{ student.physical_face.experience }}</td>
+                                <td>{{ student.academic_degree.name }}</td>
+                                <td>{{ student.academic_rank.name }}</td>
+                                <td>{{ student.qualification_category.name }}</td>
+                                <td>{{ student.job_position.name }}</td>
+                                <td>{{ student.educational_organization.name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
