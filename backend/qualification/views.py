@@ -1,18 +1,13 @@
-from django.shortcuts import render
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView
+
+from qualification.models.Course import Course
 
 
-def index(request):
-    return render(request, 'qualification/index.html')
+class IndexView(ListView):
+    model = Course
+    template_name = 'qualification/index.html'
 
-
-class CoursesList(ListView):
-    pass
-
-
-class Training(TemplateView):
-    template_name = 'qualification/training.html'
-
-
-class ChoiceOfEmployees(TemplateView):
-    template_name = 'qualification/choice_of_employees.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['courses'] = Course.objects.all()
+        return context
