@@ -75,7 +75,7 @@
                         <button class="btn btn-primary mr-2" id="add-btn-group" type="submit">Загрузить данные</button>
                     </form>
                 </div>
-                <div id="result-group" class="row mt-5 justify-content-around"></div>
+                <div id="result-group" class="mt-5 row justify-content-center"></div>
             </div>
         </div>
     </div>
@@ -130,9 +130,8 @@
 				let card = document.createElement('div'),
 					cardHeader = document.createElement('div'),
 					cardBody = document.createElement('div');
-				card.setAttribute('class', 'card border-dark mb-3 col-4');
-				card.setAttribute('style', 'max-width: 18rem;');
-				cardHeader.setAttribute('class', 'card-header');
+				card.setAttribute('class', 'card border-dark mb-3 col-8 text-start');
+				cardHeader.setAttribute('class', 'card-header text-center');
 				cardBody.setAttribute('class', 'card-body text-dark');
 				card.appendChild(cardHeader);
 				card.appendChild(cardBody);
@@ -140,7 +139,27 @@
 					cardHeader.textContent = `${content[`${i}`][j].groupName}`;
 					let cardText = document.createElement('div');
 					cardText.setAttribute('class', 'card-text');
-					cardText.textContent = `${content[`${i}`][j].name} | ${content[`${i}`][j].academicDegree} | ${content[`${i}`][j].academicRank} | ${content[`${i}`][j].qualificationCategory} | ${content[`${i}`][j].monthsWithoutTraining}`;
+					let name = content[`${i}`][j].name;
+					let academicDegree = content[`${i}`][j].academicDegree;
+					if (academicDegree === 0) {
+						academicDegree = 'Кандидат наук';
+                    } else if (academicDegree === 1) {
+						academicDegree = 'Доктор наук';
+                    }
+					let academicRank = content[`${i}`][j].academicRank;
+					if (academicRank === 0) {
+						academicRank = 'Доцент';
+					} else if (academicRank === 1) {
+						academicRank = 'Профессор';
+					}
+					let qualificationCategory = content[`${i}`][j].qualificationCategory;
+					if (qualificationCategory === 0) {
+						qualificationCategory = 'Первая квалификационная категория';
+					} else if (qualificationCategory === 1) {
+						qualificationCategory = 'Высшая квалификационная категория';
+					}
+					let monthsWithoutTraining = content[`${i}`][j].monthsWithoutTraining;
+					cardText.textContent = `${name} | ${academicDegree} | ${academicRank} | ${qualificationCategory} | ${monthsWithoutTraining} мес`;
 					cardBody.appendChild(cardText);
 				}
 				resultGroup.appendChild(card);

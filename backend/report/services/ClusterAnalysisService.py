@@ -48,15 +48,13 @@ class ClusterAnalysisService:
             if months_without_training >= 60:
                 group_name = 'Требуется повышение квалификации'
             elif months_without_training >= 50:
-                group_name = 'Низко квалифицированные'
-            elif months_without_training >= 25:
-                group_name = 'Средне квалифицированные'
-            elif months_without_training >= 10 and qualification_category == 0:
-                group_name = 'Средне квалифицированные'
-            elif months_without_training >= 10 and qualification_category == 1:
-                group_name = 'Высоко квалифицированные'
+                group_name = 'Низкий уровень квалификации'
+            elif months_without_training >= 35:
+                group_name = 'Ниже среднего уровень квалификации'
+            elif months_without_training >= 20:
+                group_name = 'Средний уровень квалификации'
             elif months_without_training >= 0:
-                group_name = 'Высоко квалифицированные'
+                group_name = 'Высокий уровень квалификации'
             student = {
                 'groupName': group_name,
                 'name': name,
