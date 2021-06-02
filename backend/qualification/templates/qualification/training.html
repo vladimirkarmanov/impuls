@@ -20,11 +20,17 @@
                 <div class="card-header">
                     <ul id="training-nav" class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a class="btn btn-outline-secondary" aria-current="true" href="{% url 'qualification:choice' %}">
-                                <img src="{% static 'img/buttons/choices.png' %}" alt="">
-                                Выбор сотрудников для повышения квалификации
+                            <a class="btn btn-outline-secondary" aria-current="true" href="{% url 'qualification:requests_list' %}">
+                                <img src="{% static 'img/buttons/list.png' %}" alt="">
+                                Заявки
                             </a>
                         </li>
+{#                        <li class="nav-item">#}
+{#                            <a class="btn btn-outline-secondary" aria-current="true" href="{% url 'qualification:distributions_list' %}">#}
+{#                                <img src="{% static 'img/buttons/choices.png' %}" alt="">#}
+{#                                Распределения на курсы#}
+{#                            </a>#}
+{#                        </li>#}
                     </ul>
                 </div>
                 <div class="card-body">

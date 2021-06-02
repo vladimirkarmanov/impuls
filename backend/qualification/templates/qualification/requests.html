@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Заявки
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="card text-center mt-2">
+                <div class="card-body">
+                    <h5 class="card-title">Список заявок</h5>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Дата</th>
+                            <th scope="col">Курс</th>
+                            <th scope="col">ФИО</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for request in requests %}
+                            <tr>
+                                <td>{{ request.date }}</td>
+                                <td>{{ request.course.name }}</td>
+                                <td>{{ request.teacher_role.physical_face.get_full_name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
