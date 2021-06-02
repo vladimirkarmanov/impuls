@@ -36,32 +36,28 @@
                                     <td>Ученая степень</td>
                                     <td>Ученое звание</td>
                                     <td>Квалиф. категория</td>
-                                    <td>Сколько не повышал квалиф., мес</td>
+                                    <td>Год последнего повышения квалиф.</td>
                                 </tr>
                                 {% for student in students %}
                                     <tr class="group-tr">
                                         <td><input class="form-control input-group-text" type="text"
                                                    value="{{ student.0 }}" required></td>
-                                        <td><input class="form-control input-group-text" type="number"
-                                                   value="{{ student.1 }}" required step="any"></td>
-                                        <td><input class="form-control input-group-text" type="number"
-                                                   value="{{ student.2 }}" required step="any"></td>
-                                        <td><input class="form-control input-group-text" type="number"
-                                                   value="{{ student.3 }}" required step="any"></td>
-                                        <td><input class="form-control input-group-text" type="number"
-                                                   value="{{ student.4 }}" required step="any"></td>
+                                        <td><input class="form-control input-group-text" type="text"
+                                                   value="{{ student.1 }}" required></td>
+                                        <td><input class="form-control input-group-text" type="text"
+                                                   value="{{ student.2 }}" required></td>
+                                        <td><input class="form-control input-group-text"
+                                                   value="{{ student.3 }}" required></td>
+                                        <td><input class="form-control input-group-text" type="text"
+                                                   value="{{ student.4 }}" required></td>
                                     </tr>
                                 {% empty %}
                                     <tr class="group-tr">
                                         <td><input class="form-control input-group-text" type="text" required></td>
-                                        <td><input class="form-control input-group-text" type="number" required
-                                                   step="any"></td>
-                                        <td><input class="form-control input-group-text" type="number" required
-                                                   step="any"></td>
-                                        <td><input class="form-control input-group-text" type="number" required
-                                                   step="any"></td>
-                                        <td><input class="form-control input-group-text" type="number" required
-                                                   step="any"></td>
+                                        <td><input class="form-control input-group-text" type="text" required></td>
+                                        <td><input class="form-control input-group-text" type="text" required></td>
+                                        <td><input class="form-control input-group-text" type="text" required></td>
+                                        <td><input class="form-control input-group-text" type="text" required></td>
                                     </tr>
                                 {% endfor %}
                             </table>
@@ -103,7 +99,7 @@
 						academicDegree: rowColumns[1].querySelector('input').value.trim(),
 						academicRank: rowColumns[2].querySelector('input').value.trim(),
 						qualificationCategory: rowColumns[3].querySelector('input').value.trim(),
-						monthsWithoutTraining: rowColumns[4].querySelector('input').value.trim(),
+						lastTrainingYear: rowColumns[4].querySelector('input').value.trim(),
 					};
 					body.push(record);
 				}
@@ -118,52 +114,54 @@
 
 				const content = await rawResponse.json();
 				console.log(content)
-				showGroupsResult(content);
+				createResultTable(content);
 			})();
 		});
 
-		function showGroupsResult(content) {
-			resultGroup.querySelectorAll('.card').forEach(function(card) {
-				card.remove();
-			})
-			for (let i = 1; i < Object.keys(content).length + 1; i++) {
-				let card = document.createElement('div'),
-					cardHeader = document.createElement('div'),
-					cardBody = document.createElement('div');
-				card.setAttribute('class', 'card border-dark mb-3 col-8 text-start');
-				cardHeader.setAttribute('class', 'card-header text-center');
-				cardBody.setAttribute('class', 'card-body text-dark');
-				card.appendChild(cardHeader);
-				card.appendChild(cardBody);
-				for (let j = 0; j < content[`${i}`].length; j++) {
-					cardHeader.textContent = `${content[`${i}`][j].groupName}`;
-					let cardText = document.createElement('div');
-					cardText.setAttribute('class', 'card-text');
-					let name = content[`${i}`][j].name;
-					let academicDegree = content[`${i}`][j].academicDegree;
-					if (academicDegree === 0) {
-						academicDegree = 'Кандидат наук';
-                    } else if (academicDegree === 1) {
-						academicDegree = 'Доктор наук';
-                    }
-					let academicRank = content[`${i}`][j].academicRank;
-					if (academicRank === 0) {
-						academicRank = 'Доцент';
-					} else if (academicRank === 1) {
-						academicRank = 'Профессор';
-					}
-					let qualificationCategory = content[`${i}`][j].qualificationCategory;
-					if (qualificationCategory === 0) {
-						qualificationCategory = 'Первая квалификационная категория';
-					} else if (qualificationCategory === 1) {
-						qualificationCategory = 'Высшая квалификационная категория';
-					}
-					let monthsWithoutTraining = content[`${i}`][j].monthsWithoutTraining;
-					cardText.textContent = `${name} | ${academicDegree} | ${academicRank} | ${qualificationCategory} | ${monthsWithoutTraining} мес`;
-					cardBody.appendChild(cardText);
-				}
-				resultGroup.appendChild(card);
+		function createResultTable(content) {
+			if (resultGroup.querySelector('.table') !== null) {
+				resultGroup.querySelector('.table').remove();
+            }
+
+			let table = document.createElement('table'),
+				thead = document.createElement('thead'),
+				tbody = document.createElement('tbody');
+
+			table.setAttribute('class', 'table text-start');
+
+			let headers = ['ФИО', 'Ученая степень', 'Ученое звание', 'Квалиф. категория', 'Год последнего повышения квалиф.', 'Примечание'];
+			let tr = document.createElement('tr');
+			for (let i = 0; i < headers.length; i++) {
+				let th = document.createElement('th');
+				th.setAttribute('scope', 'col');
+				th.textContent = headers[i];
+				tr.appendChild(th);
 			}
+			thead.appendChild(tr);
+
+			let colors = ['#7FA848', '#48A8A8', '#5D65B0', '#B8B8B8', '#BB7861']
+			for (let i = 1; i < Object.keys(content).length + 1; i++) {
+				for (let j = 0; j < content[`${i}`].length; j++) {
+					let tr = document.createElement('tr');
+					tr.style.backgroundColor = colors[i-1];
+					let groupName = content[`${i}`][j].groupName,
+						name = content[`${i}`][j].name,
+						academicDegree = content[`${i}`][j].academicDegree,
+						academicRank = content[`${i}`][j].academicRank,
+						qualificationCategory = content[`${i}`][j].qualificationCategory,
+						lastTrainingYear = content[`${i}`][j].lastTrainingYear;
+					let data = [name, academicDegree, academicRank, qualificationCategory, lastTrainingYear, groupName];
+					for (let i = 0; i < data.length; i++) {
+						let td = document.createElement('td');
+						td.textContent = data[i];
+						tr.appendChild(td);
+					}
+					tbody.appendChild(tr);
+				}
+			}
+			table.appendChild(thead);
+			table.appendChild(tbody);
+			resultGroup.appendChild(table);
 		}
 
 		function hasEmptyValues(columns) {

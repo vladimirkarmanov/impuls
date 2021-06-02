@@ -33,5 +33,6 @@ def analysis_process(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
         cluster_analyser = ClusterAnalysisService()
+        json_data = cluster_analyser.map_params(json_data, reverse=False)
         data = cluster_analyser.cluster_analysis(json_data)
         return JsonResponse(data)

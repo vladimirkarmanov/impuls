@@ -1,8 +1,10 @@
+from datetime import datetime
 from math import sqrt
 from typing import List
 
 import pandas
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
 
 class ClusterAnalysisService:
@@ -30,12 +32,50 @@ class ClusterAnalysisService:
     def _get_dataset(self, data: List[dict] = None):
         return pandas.DataFrame(data)
 
+    def map_params(self, data: List[dict], reverse: bool) -> List[dict]:
+        if not reverse:
+            for record in data:
+                if 'канд' in record['academicDegree'].lower():
+                    record['academicDegree'] = 0
+                elif 'докт' in record['academicDegree'].lower():
+                    record['academicDegree'] = 1
+
+                if 'доц' in record['academicRank'].lower():
+                    record['academicRank'] = 0
+                elif 'проф' in record['academicRank'].lower():
+                    record['academicRank'] = 1
+
+                if 'перв' in record['qualificationCategory'].lower():
+                    record['qualificationCategory'] = 0
+                elif 'высш' in record['qualificationCategory'].lower():
+                    record['qualificationCategory'] = 1
+        else:
+            for record in data:
+                if record['academicDegree'] == 0:
+                    record['academicDegree'] = 'Кандидат'
+                elif record['academicDegree'] == 1:
+                    record['academicDegree'] = 'Доктор'
+
+                if record['academicRank'] == 0:
+                    record['academicRank'] = 'Доцент'
+                elif record['academicRank'] == 1:
+                    record['academicRank'] = 'Профессор'
+
+                if record['qualificationCategory'] == 0:
+                    record['qualificationCategory'] = 'Первая'
+                elif record['qualificationCategory'] == 1:
+                    record['qualificationCategory'] = 'Высшая'
+        return data
+
     def cluster_analysis(self, data) -> dict:
         dataset = self._get_dataset(data)
         x = dataset.iloc[:, [1, 2, 3, 4]].values
+        # normalization
+        scaler = StandardScaler()
+        x = scaler.fit_transform(x)
 
         n_clusters = 5
-        kmeans = KMeans(n_clusters=n_clusters, init='k-means++', random_state=42)
+        kmeans = KMeans(n_clusters=n_clusters, init='k-means++', random_state=0)
         y_kmeans = kmeans.fit_predict(x)
         clusters = {c + 1: [] for c in range(max(y_kmeans) + 1)}
         for i in range(len(dataset)):
@@ -43,17 +83,18 @@ class ClusterAnalysisService:
             academic_degree = int(dataset.iloc[i][1])
             academic_rank = int(dataset.iloc[i][2])
             qualification_category = int(dataset.iloc[i][3])
-            months_without_training = int(dataset.iloc[i][4])
+            last_training_year = int(dataset.iloc[i][4])
             group_name = ''
-            if months_without_training >= 60:
+            year = datetime.now().year
+            if year - last_training_year >= 5:
                 group_name = 'Требуется повышение квалификации'
-            elif months_without_training >= 50:
+            elif year - last_training_year >= 4:
                 group_name = 'Низкий уровень квалификации'
-            elif months_without_training >= 35:
+            elif year - last_training_year >= 3:
                 group_name = 'Ниже среднего уровень квалификации'
-            elif months_without_training >= 20:
+            elif year - last_training_year >= 2:
                 group_name = 'Средний уровень квалификации'
-            elif months_without_training >= 0:
+            elif year - last_training_year >= 0:
                 group_name = 'Высокий уровень квалификации'
             student = {
                 'groupName': group_name,
@@ -61,8 +102,8 @@ class ClusterAnalysisService:
                 'academicDegree': academic_degree,
                 'academicRank': academic_rank,
                 'qualificationCategory': qualification_category,
-                'monthsWithoutTraining': months_without_training
+                'lastTrainingYear': last_training_year
             }
-            clusters[y_kmeans[i] + 1].append(student)
+            clusters[y_kmeans[i] + 1].append(self.map_params([student], reverse=True)[0])
 
         return clusters
