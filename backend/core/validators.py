@@ -19,3 +19,8 @@ only_numbers = RegexValidator(
     regex=r'^\d{0,9}$',
     message='Это поле должно содержать только цифры'
 )
+
+username_regex = RegexValidator(
+    regex=r'^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$',
+    message='Неверный формат логина'
+)
