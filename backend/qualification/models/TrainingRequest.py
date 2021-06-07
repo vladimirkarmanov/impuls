@@ -24,4 +24,4 @@ class TrainingRequest(models.Model):
         ordering = ['date']
 
     def __str__(self):
-        return self.date.strftime('%d %m %Y')
+        return self.date.strftime('%d.%m.%Y')

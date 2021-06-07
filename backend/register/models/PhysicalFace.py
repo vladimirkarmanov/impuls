@@ -20,3 +20,7 @@ class PhysicalFace(models.Model):
     def get_full_name(self):
         full_name = f'{self.last_name} {self.first_name} {self.patronymic}'
         return full_name.strip()
+
+    def get_surname_and_initials(self):
+        surname_and_initials = f'{self.last_name} {self.first_name[0]}.{self.patronymic[0]}'
+        return surname_and_initials.strip()

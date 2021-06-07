@@ -47,4 +47,4 @@ class TeacherRole(models.Model):
         ordering = ['date_start']
 
     def __str__(self):
-        return self.date_start.strftime('%d %m %Y')
+        return f'{self.physical_face.get_full_name()} | {self.educational_organization}'

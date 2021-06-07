@@ -20,7 +20,7 @@
                 <h5 class="card-title">Анализ данных повышения квалификации</h5>
                 {% if error_msg %}
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>{{ error_msg }}</strong> Проверьте файл перед загрузкой.
+                        <strong>{{ error_msg }}</strong>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -113,8 +113,19 @@
 				});
 
 				const content = await rawResponse.json();
-				console.log(content)
-				createResultTable(content);
+				if ('error' in content) {
+					if (resultGroup.querySelector('.alert') !== null) {
+						resultGroup.querySelector('.alert').remove();
+					}
+					let alert = document.createElement('div'),
+                        strong = document.createElement('strong');
+					alert.setAttribute('class', 'alert alert-danger');
+					strong.textContent = content.error;
+					alert.appendChild(strong);
+					resultGroup.appendChild(alert);
+				} else {
+					createResultTable(content);
+				}
 			})();
 		});
 

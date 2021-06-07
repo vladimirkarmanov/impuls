@@ -77,7 +77,7 @@ USE_TZ = True
 
 # Auth
 LOGIN_URL = '/register/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/register/students/'
 LOGOUT_REDIRECT_URL = '/register/login/'
 
 # Media and static

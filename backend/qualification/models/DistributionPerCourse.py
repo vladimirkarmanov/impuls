@@ -17,4 +17,4 @@ class DistributionPerCourse(models.Model):
         ordering = ['date_start']
 
     def __str__(self):
-        return self.date_start
+        return self.date_start.strftime('%d.%m.%Y')

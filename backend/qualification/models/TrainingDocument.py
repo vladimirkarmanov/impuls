@@ -25,4 +25,4 @@ class TrainingDocument(models.Model):
         ordering = ['date']
 
     def __str__(self):
-        return self.date
+        return self.date.strftime('%d.%m.%Y')

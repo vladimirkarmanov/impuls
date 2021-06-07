@@ -108,9 +108,9 @@ class QualificationCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(TeacherRole)
 class TeacherRoleAdmin(admin.ModelAdmin):
-    list_display = ('date_start',)
-    list_display_links = ('date_start',)
-    search_fields = ('date_start',)
+    list_display = ('physical_face', 'date_start', 'date_end', 'educational_organization')
+    list_display_links = ('physical_face',)
+    search_fields = ('date_start', 'date_end')
 
     class Meta:
         model = TeacherRole

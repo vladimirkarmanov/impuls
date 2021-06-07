@@ -1,6 +1,7 @@
 from django.views.generic import ListView, TemplateView
 
 from qualification.models.Course import Course
+from qualification.models.DistributionPerCourse import DistributionPerCourse
 from qualification.models.TrainingRequest import TrainingRequest
 
 
@@ -25,4 +26,14 @@ class RequestsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['requests'] = TrainingRequest.objects.all()
+        return context
+
+
+class DistributionsList(ListView):
+    model = DistributionPerCourse
+    template_name = 'qualification/distributions.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['distributions'] = DistributionPerCourse.objects.all()
         return context

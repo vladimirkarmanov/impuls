@@ -8,10 +8,10 @@ from sklearn.preprocessing import StandardScaler
 
 
 class ClusterAnalysisService:
-    def _calculate_wcss(self, data, max_clusters_count=10):
+    def _calculate_wcss(self, data, max_clusters_count=5):
         wcss = []
         for i in range(1, max_clusters_count + 1):
-            kmeans = KMeans(n_clusters=i, init='k-means++', random_state=42)
+            kmeans = KMeans(n_clusters=i, init='k-means++', random_state=0)
             kmeans.fit(data)
             wcss.append(kmeans.inertia_)
         return wcss
@@ -27,7 +27,7 @@ class ClusterAnalysisService:
             numerator = abs((y2 - y1) * x0 - (x2 - x1) * y0 + x2 * y1 - y2 * x1)
             denominator = sqrt((y2 - y1) ** 2 + (x2 - x1) ** 2)
             distances.append(numerator / denominator)
-        return distances.index(max(distances)) + 3
+        return distances.index(max(distances))
 
     def _get_dataset(self, data: List[dict] = None):
         return pandas.DataFrame(data)
@@ -74,7 +74,7 @@ class ClusterAnalysisService:
         scaler = StandardScaler()
         x = scaler.fit_transform(x)
 
-        n_clusters = 5
+        n_clusters = self._optimal_number_of_clusters(self._calculate_wcss(x))
         kmeans = KMeans(n_clusters=n_clusters, init='k-means++', random_state=0)
         y_kmeans = kmeans.fit_predict(x)
         clusters = {c + 1: [] for c in range(max(y_kmeans) + 1)}
