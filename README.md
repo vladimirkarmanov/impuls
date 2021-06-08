@@ -1,7 +1,12 @@
-### Разработка
-Чтобы запустить дев. сервер выполните команду из папки backend:
+### Требования
+python >= 3.8
 
-`python manage.py runserver 8000 --settings=config.settings.development`
+### Разработка
+Чтобы запустить дев. сервер выполните следующие команды в терминале из папки `backend`:
+
+1) `pip install -r requirements.txt`
+2) `python manage.py migrate --run-syncdb`
+3) `python manage.py runserver 8000 --settings=config.settings.development`
 
 ### Докер
 1) Переименуйте файл `.env.example` в `.env`
